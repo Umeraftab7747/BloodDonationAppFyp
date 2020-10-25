@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet, View, TextInput, Text, Animated} from 'react-native';
-import {w, h} from 'react-native-responsiveness';
+import {h} from 'react-native-responsiveness';
 import {Icon} from 'react-native-elements';
 
 export class Textinput extends Component {
