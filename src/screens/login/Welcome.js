@@ -23,7 +23,7 @@ export class Welcome extends Component {
   componentDidMount = () => {
     setTimeout(() => {
       this.startAnimation();
-    }, 10);
+    }, 3000);
   };
 
   startAnimation = () => {
