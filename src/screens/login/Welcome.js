@@ -17,6 +17,7 @@ export class Welcome extends Component {
   state = {
     logoAnimation: new Animated.Value(0),
     lowerContainerAnimation: new Animated.Value(0),
+    Signup: false,
   };
 
   componentDidMount = () => {
@@ -36,6 +37,38 @@ export class Welcome extends Component {
       duration: 900,
       useNativeDriver: false,
     }).start();
+  };
+
+  Signup = () => {
+    Animated.timing(this.state.lowerContainerAnimation, {
+      toValue: 440,
+      duration: 900,
+      useNativeDriver: false,
+    }).start();
+    setTimeout(() => {
+      this.setState({Signup: true}),
+        Animated.timing(this.state.lowerContainerAnimation, {
+          toValue: -440,
+          duration: 900,
+          useNativeDriver: false,
+        }).start();
+    }, 600);
+  };
+
+  Signin = () => {
+    Animated.timing(this.state.lowerContainerAnimation, {
+      toValue: 440,
+      duration: 900,
+      useNativeDriver: false,
+    }).start();
+    setTimeout(() => {
+      this.setState({Signup: false}),
+        Animated.timing(this.state.lowerContainerAnimation, {
+          toValue: -440,
+          duration: 900,
+          useNativeDriver: false,
+        }).start();
+    }, 600);
   };
 
   render() {
@@ -63,25 +96,61 @@ export class Welcome extends Component {
           />
         </Animated.View>
         <Animated.View style={[styles.LowerCotnainer, AnimatedStyle2]}>
-          <View style={styles.LowerContainerTextInput}>
-            <Textinput name={'mail-outline'} placeholder={'Email'} />
-            <Textinput name={'lock-closed-outline'} placeholder={'Password'} />
-            <TouchableOpacity style={styles.ForgotPass}>
-              <Text style={styles.ForgotPassText}>FORGOT PASSWORD !</Text>
-            </TouchableOpacity>
-          </View>
-          <Button Text={'Login'} TopMargin={{marginTop: h('5%')}} />
-          <Text style={styles.or}>OR</Text>
-          <Button Text={'Enter as Guest'} />
+          {this.state.Signup === false ? (
+            <>
+              <View style={styles.LowerContainerTextInput}>
+                <Textinput name={'mail-outline'} placeholder={'Email'} />
+                <Textinput
+                  name={'lock-closed-outline'}
+                  placeholder={'Password'}
+                />
+                <TouchableOpacity style={styles.ForgotPass}>
+                  <Text style={styles.ForgotPassText}>FORGOT PASSWORD !</Text>
+                </TouchableOpacity>
+              </View>
+              <Button Text={'Login'} TopMargin={{marginTop: h('5%')}} />
+              <Text style={styles.or}>OR</Text>
+              <Button Text={'Enter as Guest'} />
 
-          <View style={styles.SignUp}>
-            <View style={styles.leftSignup}>
-              <Text style={styles.SignupText}>DONT HAVE A ACCOUNT!</Text>
-            </View>
-            <TouchableOpacity style={styles.rightSignup}>
-              <Text style={styles.SignupText2}>SignUp</Text>
-            </TouchableOpacity>
-          </View>
+              <View style={styles.SignUp}>
+                <View style={styles.leftSignup}>
+                  <Text style={styles.SignupText}>DONT HAVE A ACCOUNT!</Text>
+                </View>
+                <TouchableOpacity
+                  delayPressIn={0}
+                  onPress={() => this.Signup()}
+                  style={styles.rightSignup}>
+                  <Text style={styles.SignupText2}>SignUp</Text>
+                </TouchableOpacity>
+              </View>
+            </>
+          ) : (
+            <>
+              <Textinput name={'person-outline'} placeholder={'Name'} />
+              <Textinput name={'mail-outline'} placeholder={'Email'} />
+              <Textinput
+                name={'lock-closed-outline'}
+                placeholder={'Password'}
+              />
+              <Textinput
+                name={'lock-closed-outline'}
+                placeholder={'Confirm Password'}
+              />
+              <Button Text={'Login'} TopMargin={{marginTop: h('2%')}} />
+
+              <View style={styles.SignUp}>
+                <View style={styles.leftSignup}>
+                  <Text style={styles.SignupText}>Already HAVE A ACCOUNT!</Text>
+                </View>
+                <TouchableOpacity
+                  delayPressIn={0}
+                  onPress={() => this.Signin()}
+                  style={styles.rightSignup}>
+                  <Text style={styles.SignupText2}>SignIn</Text>
+                </TouchableOpacity>
+              </View>
+            </>
+          )}
         </Animated.View>
       </View>
     );
