@@ -23,7 +23,7 @@ export class Welcome extends Component {
   componentDidMount = () => {
     setTimeout(() => {
       this.startAnimation();
-    }, 3000);
+    }, 5000);
   };
 
   startAnimation = () => {
@@ -42,14 +42,14 @@ export class Welcome extends Component {
   Signup = () => {
     Animated.timing(this.state.lowerContainerAnimation, {
       toValue: 440,
-      duration: 900,
+      duration: 500,
       useNativeDriver: false,
     }).start();
     setTimeout(() => {
       this.setState({Signup: true}),
         Animated.timing(this.state.lowerContainerAnimation, {
           toValue: -440,
-          duration: 900,
+          duration: 500,
           useNativeDriver: false,
         }).start();
     }, 600);
@@ -58,14 +58,14 @@ export class Welcome extends Component {
   Signin = () => {
     Animated.timing(this.state.lowerContainerAnimation, {
       toValue: 440,
-      duration: 900,
+      duration: 500,
       useNativeDriver: false,
     }).start();
     setTimeout(() => {
       this.setState({Signup: false}),
         Animated.timing(this.state.lowerContainerAnimation, {
           toValue: -440,
-          duration: 900,
+          duration: 500,
           useNativeDriver: false,
         }).start();
     }, 600);
