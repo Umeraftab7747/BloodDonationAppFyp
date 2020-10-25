@@ -23,7 +23,7 @@ export class Welcome extends Component {
   componentDidMount = () => {
     setTimeout(() => {
       this.startAnimation();
-    }, 5000);
+    }, 100);
   };
 
   startAnimation = () => {
@@ -99,11 +99,8 @@ export class Welcome extends Component {
           {this.state.Signup === false ? (
             <>
               <View style={styles.LowerContainerTextInput}>
-                <Textinput name={'mail-outline'} placeholder={'Email'} />
-                <Textinput
-                  name={'lock-closed-outline'}
-                  placeholder={'Password'}
-                />
+                <Textinput name={'mail'} placeholder={'Email'} />
+                <Textinput name={'lock-closed'} placeholder={'Password'} />
                 <TouchableOpacity style={styles.ForgotPass}>
                   <Text style={styles.ForgotPassText}>FORGOT PASSWORD !</Text>
                 </TouchableOpacity>
@@ -126,14 +123,16 @@ export class Welcome extends Component {
             </>
           ) : (
             <>
-              <Textinput name={'person-outline'} placeholder={'Name'} />
-              <Textinput name={'mail-outline'} placeholder={'Email'} />
+              <Textinput name={'person'} placeholder={'Name'} />
+              <Textinput name={'mail'} placeholder={'Email'} />
               <Textinput
-                name={'lock-closed-outline'}
-                placeholder={'Password'}
+                name={'phone-portrait'}
+                placeholder={'Phone'}
+                keyboardType={'numeric'}
               />
+              <Textinput name={'lock-closed'} placeholder={'Password'} />
               <Textinput
-                name={'lock-closed-outline'}
+                name={'lock-closed'}
                 placeholder={'Confirm Password'}
               />
               <Button Text={'Login'} TopMargin={{marginTop: h('2%')}} />
@@ -216,7 +215,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
-    marginTop: h('4%'),
+    marginTop: h('2%'),
   },
   leftSignup: {
     // backgroundColor: 'green',

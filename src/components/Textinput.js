@@ -20,6 +20,7 @@ export class Textinput extends Component {
           style={styles.txtinput}
           placeholder={this.props.placeholder}
           placeholderTextColor={'#05375a'}
+          keyboardType={this.props.keyboardType}
         />
       </View>
     );
@@ -42,7 +43,7 @@ const styles = StyleSheet.create({
     width: '85%',
     height: h('7%'),
     paddingLeft: h('1.5%'),
-    color: 'white',
+    color: '#05375a',
   },
   icon: {
     // backgroundColor: 'red',
