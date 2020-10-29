@@ -8,7 +8,7 @@ export class NavHeader extends Component {
     return (
       <View style={styles.container}>
         <TouchableOpacity {...this.props} delayPressIn={0} style={styles.icon}>
-          <Icon name={'chevron-back'} type="ionicon" color="#0007" size={35} />
+          <Icon name={'menu-sharp'} type="ionicon" color="#0007" size={35} />
         </TouchableOpacity>
         <View style={styles.middle}>
           <Text style={styles.color}>{this.props.txt}</Text>
