@@ -4,6 +4,11 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 const Tab = createMaterialBottomTabNavigator();
 
+import Feather from 'react-native-vector-icons/Feather';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Entypo from 'react-native-vector-icons/Entypo';
+
 // Screens
 import {Home} from '../screens/dashboard';
 import {Request} from '../screens/dashboard';
@@ -22,7 +27,7 @@ export function Bottomtab() {
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: ({color}) => (
-            <MaterialCommunityIcons name="home" color={color} size={26} />
+            <AntDesign name="home" color={color} size={24} />
           ),
         }}
       />
@@ -32,7 +37,7 @@ export function Bottomtab() {
         options={{
           tabBarLabel: 'Request',
           tabBarIcon: ({color}) => (
-            <MaterialCommunityIcons name="home" color={color} size={26} />
+            <Entypo name="drop" color={color} size={22} />
           ),
         }}
       />
@@ -42,7 +47,11 @@ export function Bottomtab() {
         options={{
           tabBarLabel: 'Map',
           tabBarIcon: ({color}) => (
-            <MaterialCommunityIcons name="home" color={color} size={26} />
+            <MaterialCommunityIcons
+              name="map-marker-radius"
+              color={color}
+              size={25}
+            />
           ),
         }}
       />
@@ -52,7 +61,11 @@ export function Bottomtab() {
         options={{
           tabBarLabel: 'Profile',
           tabBarIcon: ({color}) => (
-            <MaterialCommunityIcons name="home" color={color} size={26} />
+            <MaterialCommunityIcons
+              name="account-outline"
+              color={color}
+              size={28}
+            />
           ),
         }}
       />
