@@ -222,6 +222,7 @@ const styles = StyleSheet.create({
   Container: {
     flex: 1,
     // backgroundColor: Primary,
+    alignItems: 'center',
   },
   ModalContainer: {
     backgroundColor: '#0004',
@@ -267,9 +268,10 @@ const styles = StyleSheet.create({
     borderRadius: h('2%'),
     marginTop: h('2%'),
     backgroundColor: Primary,
-    width: w('100%'),
+    width: w('90%'),
     paddingVertical: 20,
     paddingHorizontal: 35,
+    marginBottom: h('0.6%'),
   },
   membersText: {
     fontWeight: '800',
