@@ -21,7 +21,12 @@ export class Map extends Component {
   render() {
     return (
       <View style={styles.Container}>
-        <NavHeader txt="Maps" />
+        <NavHeader
+          txt="Maps"
+          onPress={() => {
+            this.props.navigation.openDrawer();
+          }}
+        />
       </View>
     );
   }

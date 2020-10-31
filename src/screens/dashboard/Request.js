@@ -23,7 +23,12 @@ export class Request extends Component {
   render() {
     return (
       <View style={styles.Container}>
-        <NavHeader txt="Request" />
+        <NavHeader
+          txt="Request"
+          onPress={() => {
+            this.props.navigation.openDrawer();
+          }}
+        />
         <View style={styles.SearchBox}>
           <View style={styles.TopBox}>
             <Text style={styles.SearchText}>Search</Text>

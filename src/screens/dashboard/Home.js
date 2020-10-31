@@ -151,7 +151,12 @@ export class Home extends Component {
   render() {
     return (
       <View style={styles.Container}>
-        <NavHeader txt="Home" />
+        <NavHeader
+          txt="Home"
+          onPress={() => {
+            this.props.navigation.openDrawer();
+          }}
+        />
 
         {/* FlatList */}
 

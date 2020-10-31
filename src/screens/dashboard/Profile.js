@@ -21,7 +21,12 @@ export class Profile extends Component {
   render() {
     return (
       <View style={styles.Container}>
-        <NavHeader txt="Profile" />
+        <NavHeader
+          txt="Profile"
+          onPress={() => {
+            this.props.navigation.openDrawer();
+          }}
+        />
         <View style={styles.TopView}>
           <View style={styles.Cicle}>
             <Image
