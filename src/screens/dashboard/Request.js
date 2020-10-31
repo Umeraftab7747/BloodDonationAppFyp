@@ -97,9 +97,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   SearchBox: {
-    backgroundColor: 'tomato',
+    backgroundColor: Primary,
     width: w('90%'),
-    height: h('22%'),
+    height: h('25%'),
     alignItems: 'center',
     marginTop: h('1%'),
     borderRadius: h('1%'),
@@ -110,21 +110,21 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   TopBox: {
-    backgroundColor: 'red',
+    // backgroundColor: 'red',
     width: '100%',
     height: '20%',
     alignItems: 'center',
   },
   MiddleBox: {
-    backgroundColor: 'gold',
+    // backgroundColor: 'gold',
     width: '100%',
     height: '60%',
     alignItems: 'center',
   },
   BottomBox: {
-    backgroundColor: 'green',
+    // backgroundColor: 'green',
     width: '100%',
-    height: '30%',
+    height: '12%',
     alignItems: 'center',
 
     justifyContent: 'center',
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     width: '100%',
     height: h('5%'),
-    backgroundColor: 'orange',
+    // backgroundColor: 'orange',
     alignItems: 'center',
   },
   SelectBloodType: {
