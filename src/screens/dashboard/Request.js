@@ -16,9 +16,10 @@ import {Icon} from 'react-native-elements';
 // Components
 import {NavHeader} from '../../components';
 import CheckBox from '@react-native-community/checkbox';
+import {Picker} from '@react-native-picker/picker';
 
 export class Request extends Component {
-  state = {checked: false, checked1: false, searched: ''};
+  state = {checked: false, checked1: false, searched: '', BloodType: 'A+'};
 
   render() {
     return (
@@ -36,6 +37,22 @@ export class Request extends Component {
           <View style={styles.MiddleBox}>
             <View style={styles.SelectBloodType}>
               <Text>Select Blood Type</Text>
+              <Picker
+                selectedValue={this.state.BloodType}
+                style={{height: 50, width: 100}}
+                onValueChange={(itemValue, itemIndex) =>
+                  this.setState({BloodType: itemValue})
+                }>
+                <Picker.Item label="AB+" value="AB+" />
+                <Picker.Item label="AB-" value="AB-" />
+                <Picker.Item label="A+" value="A+" />
+                <Picker.Item label="B+" value="B+" />
+                <Picker.Item label="A-" value="A-" />
+                <Picker.Item label="B-" value="B-" />
+                <Picker.Item label="O-" value="O-" />
+                <Picker.Item label="O+" value="O+" />
+                <Picker.Item label="Other" value="Other" />
+              </Picker>
             </View>
             <View style={styles.CheckBoxed}>
               {/* checkbox */}
