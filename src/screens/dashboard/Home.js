@@ -145,7 +145,7 @@ export class Home extends Component {
         key: '19',
       },
     ],
-    modalVisible: false,
+    modalVisible: true,
   };
 
   render() {
@@ -198,12 +198,14 @@ export class Home extends Component {
                   <Icon
                     name={'close-circle-outline'}
                     type="ionicon"
-                    color="#000"
+                    color="#fff"
                     size={35}
                   />
                 </TouchableOpacity>
               </View>
+
               <View style={styles.ModalAlertmiddle}>
+                <Text style={styles.Disclaimer}>DISCLAIMER</Text>
                 <Text style={styles.ModalText}>
                   The purpose of ProBlood is connectivity. Therefore, ProBlood
                   will not be responsible for the quality of blood
@@ -214,7 +216,6 @@ export class Home extends Component {
                   blood product at nearest blood bank.
                 </Text>
               </View>
-              <View style={styles.ModalAlertbottom}>{/* EMPTY */}</View>
             </View>
           </View>
         </Modal>
@@ -236,7 +237,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   ModalAlert: {
-    backgroundColor: '#fff',
+    backgroundColor: 'gold',
     width: w('96%'),
     height: h('40%'),
     borderRadius: h('2%'),
@@ -244,24 +245,26 @@ const styles = StyleSheet.create({
   ModalAlerttop: {
     // backgroundColor: 'gold',
     width: '100%',
-    height: '20%',
+    height: '15%',
     // justifyContent: 'flex-end',
     alignItems: 'flex-end',
   },
   ModalAlertmiddle: {
     backgroundColor: 'gold',
     width: '100%',
-    height: '60%',
+    height: '80%',
     paddingLeft: h('1.2%'),
     paddingRight: h('1.2%'),
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: h('2%'),
+    // marginTop: -h('5%'),
   },
   ModalAlertbottom: {
-    // backgroundColor: 'gold',
-    width: '100%',
-    height: '20%',
+    backgroundColor: 'gold',
+    width: w('96%'),
+    height: '10%',
+    justifyContent: 'center',
   },
   ModalText: {
     color: 'white',
@@ -285,5 +288,11 @@ const styles = StyleSheet.create({
     color: 'white',
     //width:'75%'
     //color:'#fff'
+  },
+  Disclaimer: {
+    // backgroundColor: 'red',
+    fontSize: h('3%'),
+    marginTop: h('2%'),
+    marginBottom: h('2%'),
   },
 });
