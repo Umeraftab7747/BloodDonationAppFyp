@@ -4,6 +4,8 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 const Drawer = createDrawerNavigator();
 
 import {DrawerScreen} from '../screens/DrawerScreen';
+import {Notification} from '../screens/dashboard';
+import {Records} from '../screens/dashboard';
 import {Bottomtab} from './Bottomtab';
 
 export const DrawerNavigator = () => {
@@ -12,6 +14,8 @@ export const DrawerNavigator = () => {
       openByDefault={false}
       drawerContent={(props) => <DrawerScreen {...props} />}>
       <Drawer.Screen name="Bottomtab" component={Bottomtab} />
+      <Drawer.Screen name="Notification" component={Notification} />
+      <Drawer.Screen name="Records" component={Records} />
     </Drawer.Navigator>
   );
 };

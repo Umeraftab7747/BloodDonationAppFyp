@@ -4,6 +4,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 const Stack = createStackNavigator();
 import {Welcome} from '../screens/login';
 import {Home} from '../screens/dashboard';
+import {EditProfile} from '../screens/dashboard';
 
 import {Bottomtab} from './Bottomtab';
 import {DrawerNavigator} from './DrawerNavigator ';

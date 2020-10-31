@@ -1,7 +1,7 @@
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
-import {View, Text, SafeAreaView, StyleSheet, Image} from 'react-native';
+import {View, Text, SafeAreaView, StyleSheet} from 'react-native';
 import {w, h} from 'react-native-responsiveness';
 import {Primary} from '../color';
 import {TouchableOpacity} from 'react-native-gesture-handler';
@@ -21,7 +21,7 @@ export class DrawerScreen extends Component {
 
         <TouchableOpacity
           onPress={() => {
-            this.props.navigation.navigate('Edit Profile');
+            this.props.navigation.navigate('Bottomtab');
           }}
           style={[styles.ItemView, {marginTop: h('1%')}]}>
           <View style={styles.iconContainer}>
@@ -34,10 +34,14 @@ export class DrawerScreen extends Component {
           </View>
 
           <View style={styles.txtContainer}>
-            <Text style={styles.txt}>Edit Profile</Text>
+            <Text style={styles.txt}>Home</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.ItemView}>
+        <TouchableOpacity
+          onPress={() => {
+            this.props.navigation.navigate('Notification');
+          }}
+          style={styles.ItemView}>
           <View style={styles.iconContainer}>
             <Icon
               name={'notifications'}
@@ -50,7 +54,11 @@ export class DrawerScreen extends Component {
             <Text style={styles.txt}>Notification</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.ItemView}>
+        <TouchableOpacity
+          onPress={() => {
+            this.props.navigation.navigate('Records');
+          }}
+          style={styles.ItemView}>
           <View style={styles.iconContainer}>
             <Icon
               name={'file-tray-full'}
