@@ -6,6 +6,7 @@ import {Welcome} from '../screens/login';
 import {Home} from '../screens/dashboard';
 
 import {Bottomtab} from './Bottomtab';
+import {DrawerNavigator} from './DrawerNavigator ';
 
 export class MainNavigation extends Component {
   render() {
@@ -13,10 +14,15 @@ export class MainNavigation extends Component {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
+            name="DrawerNavigator"
+            component={DrawerNavigator}
+            options={{headerShown: false}}
+          />
+          {/* <Stack.Screen
             name="Bottomtab"
             component={Bottomtab}
             options={{headerShown: false}}
-          />
+          /> */}
           <Stack.Screen
             name="Home"
             component={Home}

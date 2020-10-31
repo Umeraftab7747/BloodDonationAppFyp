@@ -18,7 +18,7 @@ import {NavHeader} from '../../components';
 import CheckBox from '@react-native-community/checkbox';
 
 export class Request extends Component {
-  state = {checked: false, checked1: false};
+  state = {checked: false, checked1: false, searched: ''};
 
   render() {
     return (
@@ -34,32 +34,7 @@ export class Request extends Component {
             </View>
             <View style={styles.CheckBoxed}>
               {/* checkbox */}
-              <TouchableOpacity
-                style={styles.CheckedboxStyle}
-                onPress={() => {
-                  this.setState({checked: !this.state.checked});
-                }}>
-                <CheckBox
-                  value={this.state.checked}
-                  onValueChange={() =>
-                    this.setState({checked: !this.state.checked})
-                  }
-                />
-                <Text>Emergency</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.CheckedboxStyle}
-                onPress={() => {
-                  this.setState({checked1: !this.state.checked1});
-                }}>
-                <CheckBox
-                  value={this.state.checked1}
-                  onValueChange={() =>
-                    this.setState({checked1: !this.state.checked1})
-                  }
-                />
-                <Text>Advance</Text>
-              </TouchableOpacity>
+
               {/* end CheckBox */}
             </View>
             <View style={styles.Quantity}>
