@@ -45,7 +45,7 @@ export class Welcome extends Component {
           .signInWithEmailAndPassword(this.state.Email, this.state.Password)
           .then(() => {
             alert('User account signed in!');
-            this.props.navigation.navigate('Creditiential');
+            this.props.navigation.replace('Creditiential');
           })
           .catch((error) => {
             if (error.code === 'auth/wrong-password') {
