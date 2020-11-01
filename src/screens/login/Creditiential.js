@@ -19,7 +19,11 @@ import {Picker} from '@react-native-picker/picker';
 import {KeyboardAwareScrollView} from '@codler/react-native-keyboard-aware-scroll-view';
 
 export class Creditiential extends Component {
-  state = {};
+  state = {
+    BloodType: 'A+',
+    Gender: 'Male',
+    Ethnicity: 'none',
+  };
 
   render() {
     return (

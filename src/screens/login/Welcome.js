@@ -23,9 +23,7 @@ export class Welcome extends Component {
     opacity: new Animated.Value(1),
     signupOpacity: new Animated.Value(0),
     Signup: false,
-    BloodType: 'A+',
-    Gender: 'Male',
-    Ethnicity: 'none',
+
     Email: '',
     Password: '',
     SignupEmail: '',
