@@ -12,6 +12,7 @@ import {w, h} from 'react-native-responsiveness';
 
 // Components
 import {Textinput, Button} from '../../components';
+import {Picker} from '@react-native-picker/picker';
 
 export class Welcome extends Component {
   state = {
@@ -20,6 +21,9 @@ export class Welcome extends Component {
     opacity: new Animated.Value(1),
     signupOpacity: new Animated.Value(0),
     Signup: false,
+    BloodType: 'A+',
+    Gender: 'Male',
+    Ethnicity: 'none',
   };
 
   componentDidMount = () => {
@@ -155,22 +159,89 @@ export class Welcome extends Component {
             </>
           ) : (
             <>
+              {/* signup */}
               <Animated.View style={[styles.SignupLogo, SignUpOpactiyStyle]}>
-                <Text style={styles.SingupLogoText}>SIGNUP</Text>
+                <Text style={styles.SingupLogoText}>Signup With ProBlood</Text>
               </Animated.View>
               <Textinput name={'person'} placeholder={'Name'} />
               <Textinput name={'mail'} placeholder={'Email'} />
+              <Textinput name={'card'} placeholder={'Cnic'} />
               <Textinput
                 name={'phone-portrait'}
                 placeholder={'Phone'}
                 keyboardType={'numeric'}
               />
+
+              {/* DROPDOWN s */}
+              <View style={styles.SelectBloodType}>
+                <Text>Gender</Text>
+                <Picker
+                  selectedValue={this.state.Gender}
+                  style={{height: 50, width: 100}}
+                  onValueChange={(itemValue, itemIndex) =>
+                    this.setState({Gender: itemValue})
+                  }>
+                  <Picker.Item label="Male" value="Male" />
+                  <Picker.Item label="Female" value="Female" />
+                  <Picker.Item label="Other" value="Other" />
+                </Picker>
+              </View>
+              {/* DROPDOWN n */}
+
+              {/* DROPDOWN s */}
+              <View style={styles.SelectBloodType}>
+                <Text>BloodType</Text>
+                <Picker
+                  selectedValue={this.state.BloodType}
+                  style={{height: 50, width: 100}}
+                  onValueChange={(itemValue, itemIndex) =>
+                    this.setState({BloodType: itemValue})
+                  }>
+                  <Picker.Item label="AB+" value="AB+" />
+                  <Picker.Item label="AB-" value="AB-" />
+                  <Picker.Item label="A+" value="A+" />
+                  <Picker.Item label="B+" value="B+" />
+                  <Picker.Item label="A-" value="A-" />
+                  <Picker.Item label="B-" value="B-" />
+                  <Picker.Item label="O-" value="O-" />
+                  <Picker.Item label="O+" value="O+" />
+                  <Picker.Item label="Other" value="Other" />
+                </Picker>
+              </View>
+              {/* DROPDOWN n */}
+              {/* DROPDOWN s */}
+              <View style={styles.SelectBloodType}>
+                <Text>Ethnicity</Text>
+                <Picker
+                  selectedValue={this.state.Ethnicity}
+                  style={{height: 50, width: 100}}
+                  onValueChange={(itemValue, itemIndex) =>
+                    this.setState({Ethnicity: itemValue})
+                  }>
+                  <Picker.Item
+                    label="American Indian"
+                    value="American Indian"
+                  />
+                  <Picker.Item label="Alaska Native" value="Alaska Native" />
+                  <Picker.Item label="Asian" value="Asian" />
+                  <Picker.Item
+                    label="Black African American"
+                    value="Black African American"
+                  />
+                  <Picker.Item
+                    label="Native Hawaiian"
+                    value="Native Hawaiian"
+                  />
+                  <Picker.Item label="White" value="White" />
+                </Picker>
+              </View>
+              {/* DROPDOWN n */}
               <Textinput name={'lock-closed'} placeholder={'Password'} />
               <Textinput
                 name={'lock-closed'}
                 placeholder={'Confirm Password'}
               />
-              <Button Text={'Login'} TopMargin={{marginTop: h('2%')}} />
+              <Button Text={'Signup'} TopMargin={{marginTop: h('2%')}} />
 
               <View style={styles.SignUp}>
                 <View style={styles.leftSignup}>
@@ -276,7 +347,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   SignupLogo: {
-    marginTop: -h('7%'),
+    marginTop: -h('8%'),
     marginBottom: h('1%'),
     width: '100%',
     height: '10%',
@@ -288,5 +359,15 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: h('4%'),
     fontWeight: 'bold',
+  },
+  SelectBloodType: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '100%',
+    height: h('7%'),
+    // backgroundColor: 'orange',
+    alignItems: 'center',
+    marginTop: h('1%'),
+    // marginBottom: h('1%'),
   },
 });
