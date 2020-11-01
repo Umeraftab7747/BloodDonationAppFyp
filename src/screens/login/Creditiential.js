@@ -23,12 +23,19 @@ export class Creditiential extends Component {
     BloodType: 'A+',
     Gender: 'Male',
     Ethnicity: 'none',
+    Name: '',
+    Email: '',
+    Cnic: '',
+    Phone: '',
   };
 
   render() {
     return (
       <KeyboardAwareScrollView>
         <View style={styles.Container}>
+          <Text style={styles.CompleteApp}>
+            COMPLETE DETAILS TO START USING APP
+          </Text>
           <Textinput name={'person'} placeholder={'Name'} />
           <Textinput name={'mail'} placeholder={'Email'} />
           <Textinput name={'card'} placeholder={'Cnic'} />
@@ -119,5 +126,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: h('1%'),
     // marginBottom: h('1%'),
+  },
+  CompleteApp: {
+    color: 'black',
+    fontWeight: 'bold',
+    fontSize: h('2.3%'),
+    marginTop: h('2%'),
+    marginBottom: h('5%'),
   },
 });
