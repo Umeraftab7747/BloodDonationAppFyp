@@ -17,13 +17,15 @@ export class Welcome extends Component {
   state = {
     logoAnimation: new Animated.Value(0),
     lowerContainerAnimation: new Animated.Value(0),
+    opacity: new Animated.Value(1),
+    signupOpacity: new Animated.Value(0),
     Signup: false,
   };
 
   componentDidMount = () => {
     setTimeout(() => {
       this.startAnimation();
-    }, 3500);
+    }, 100);
   };
 
   startAnimation = () => {
@@ -40,25 +42,47 @@ export class Welcome extends Component {
   };
 
   Signup = () => {
+    Animated.timing(this.state.opacity, {
+      toValue: 0,
+      duration: 100,
+      useNativeDriver: false,
+    }).start();
+
     Animated.timing(this.state.lowerContainerAnimation, {
       toValue: 440,
       duration: 500,
       useNativeDriver: false,
     }).start();
+
     setTimeout(() => {
       this.setState({Signup: true}),
         Animated.timing(this.state.lowerContainerAnimation, {
-          toValue: -440,
+          toValue: -650,
           duration: 500,
           useNativeDriver: false,
         }).start();
+      Animated.timing(this.state.signupOpacity, {
+        toValue: 1,
+        duration: 600,
+        useNativeDriver: false,
+      }).start();
     }, 600);
   };
 
   Signin = () => {
+    Animated.timing(this.state.signupOpacity, {
+      toValue: 1,
+      duration: 200,
+      useNativeDriver: false,
+    }).start();
     Animated.timing(this.state.lowerContainerAnimation, {
       toValue: 440,
       duration: 500,
+      useNativeDriver: false,
+    }).start();
+    Animated.timing(this.state.opacity, {
+      toValue: 1,
+      duration: 400,
       useNativeDriver: false,
     }).start();
     setTimeout(() => {
@@ -72,6 +96,12 @@ export class Welcome extends Component {
   };
 
   render() {
+    const OpactiyStyle = {
+      opacity: this.state.opacity,
+    };
+    const SignUpOpactiyStyle = {
+      opacity: this.state.signupOpacity,
+    };
     const AnimatedStyle = {
       transform: [
         {
@@ -89,12 +119,14 @@ export class Welcome extends Component {
 
     return (
       <View style={styles.Container}>
-        <Animated.View style={[styles.TopContainer, AnimatedStyle]}>
+        <Animated.View
+          style={[styles.TopContainer, AnimatedStyle, OpactiyStyle]}>
           <Image
             style={styles.LogoContainer}
             source={require('../../assets/LogoA.png')}
           />
         </Animated.View>
+
         <Animated.View style={[styles.LowerCotnainer, AnimatedStyle2]}>
           {this.state.Signup === false ? (
             <>
@@ -123,6 +155,9 @@ export class Welcome extends Component {
             </>
           ) : (
             <>
+              <Animated.View style={[styles.SignupLogo, SignUpOpactiyStyle]}>
+                <Text style={styles.SingupLogoText}>SIGNUP</Text>
+              </Animated.View>
               <Textinput name={'person'} placeholder={'Name'} />
               <Textinput name={'mail'} placeholder={'Email'} />
               <Textinput
@@ -178,7 +213,7 @@ const styles = StyleSheet.create({
   LowerCotnainer: {
     backgroundColor: 'white',
     width: '100%',
-    height: h('60%'),
+    height: h('90%'),
 
     alignItems: 'center',
     borderTopRightRadius: h('8%'),
@@ -238,6 +273,20 @@ const styles = StyleSheet.create({
   SignupText2: {
     color: '#05375a',
     fontSize: h('2%'),
+    fontWeight: 'bold',
+  },
+  SignupLogo: {
+    marginTop: -h('7%'),
+    marginBottom: h('1%'),
+    width: '100%',
+    height: '10%',
+    // backgroundColor: 'red',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  SingupLogoText: {
+    color: 'white',
+    fontSize: h('4%'),
     fontWeight: 'bold',
   },
 });

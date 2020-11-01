@@ -15,6 +15,11 @@ export class MainNavigation extends Component {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
+            name="Welcome"
+            component={Welcome}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
             name="DrawerNavigator"
             component={DrawerNavigator}
             options={{headerShown: false}}
@@ -27,11 +32,6 @@ export class MainNavigation extends Component {
           <Stack.Screen
             name="Home"
             component={Home}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Welcome"
-            component={Welcome}
             options={{headerShown: false}}
           />
         </Stack.Navigator>
