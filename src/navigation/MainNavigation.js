@@ -3,6 +3,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 const Stack = createStackNavigator();
 import {Welcome} from '../screens/login';
+import {Creditiential} from '../screens/login';
 import {Home} from '../screens/dashboard';
 import {EditProfile} from '../screens/dashboard';
 
@@ -15,13 +16,19 @@ export class MainNavigation extends Component {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
-            name="DrawerNavigator"
-            component={DrawerNavigator}
+            name="Welcome"
+            component={Welcome}
             options={{headerShown: false}}
           />
           <Stack.Screen
-            name="Welcome"
-            component={Welcome}
+            name="Creditiential"
+            component={Creditiential}
+            options={{headerShown: false}}
+          />
+
+          <Stack.Screen
+            name="DrawerNavigator"
+            component={DrawerNavigator}
             options={{headerShown: false}}
           />
 

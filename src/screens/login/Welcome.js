@@ -14,6 +14,7 @@ import {w, h} from 'react-native-responsiveness';
 import {Textinput, Button} from '../../components';
 import {Picker} from '@react-native-picker/picker';
 import {KeyboardAwareScrollView} from '@codler/react-native-keyboard-aware-scroll-view';
+import auth from '@react-native-firebase/auth';
 
 export class Welcome extends Component {
   state = {
@@ -25,12 +26,83 @@ export class Welcome extends Component {
     BloodType: 'A+',
     Gender: 'Male',
     Ethnicity: 'none',
+    Email: '',
+    Password: '',
+    SignupEmail: '',
+    SignupPassword: '',
+    SignupConfirmPassword: '',
   };
 
   componentDidMount = () => {
     setTimeout(() => {
       this.startAnimation();
     }, 100);
+    // this.UserSignUp();
+  };
+
+  Login = async () => {
+    if (this.state.Email !== '') {
+      if (this.state.Password !== '') {
+        auth()
+          .signInWithEmailAndPassword(this.state.Email, this.state.Password)
+          .then(() => {
+            alert('User account signed in!');
+            this.props.navigation.navigate('Creditiential');
+          })
+          .catch((error) => {
+            if (error.code === 'auth/wrong-password') {
+              alert('This password is Invalid');
+            }
+            if (error.code === 'auth/user-not-found') {
+              alert('This email address not found');
+            }
+            if (error.code === 'auth/invalid-email') {
+              alert('This email address is invalid!');
+            }
+            console.error(error);
+          });
+      } else {
+        alert('Password field is empty');
+      }
+    } else {
+      alert('Email field is empty');
+    }
+  };
+
+  UserSignUp = () => {
+    if (this.state.SignupEmail !== '') {
+      if (this.state.SignupPassword !== '') {
+        if (this.state.SignupPassword === this.state.SignupConfirmPassword) {
+          auth()
+            .createUserWithEmailAndPassword(
+              this.state.SignupEmail,
+              this.state.SignupPassword,
+            )
+            .then(() => {
+              alert('User account created');
+            })
+            .catch((error) => {
+              if (error.code === 'auth/email-already-in-use') {
+                alert('That email address is already in use!');
+              }
+              if (error.code === 'auth/weak-password') {
+                alert('PASSWORD MUST CONTAIN 8 character');
+              }
+              if (error.code === 'auth/invalid-email') {
+                alert('That email address is invalid!');
+              }
+
+              console.error(error);
+            });
+        } else {
+          alert('Password and Confirm Password Dont match');
+        }
+      } else {
+        alert('Passowrd is Requried');
+      }
+    } else {
+      alert('Email is Required !');
+    }
   };
 
   startAnimation = () => {
@@ -62,24 +134,14 @@ export class Welcome extends Component {
     setTimeout(() => {
       this.setState({Signup: true}),
         Animated.timing(this.state.lowerContainerAnimation, {
-          toValue: -650,
+          toValue: -450,
           duration: 500,
           useNativeDriver: false,
         }).start();
-      Animated.timing(this.state.signupOpacity, {
-        toValue: 1,
-        duration: 600,
-        useNativeDriver: false,
-      }).start();
     }, 600);
   };
 
   Signin = () => {
-    Animated.timing(this.state.signupOpacity, {
-      toValue: 1,
-      duration: 200,
-      useNativeDriver: false,
-    }).start();
     Animated.timing(this.state.lowerContainerAnimation, {
       toValue: 440,
       duration: 500,
@@ -125,8 +187,7 @@ export class Welcome extends Component {
     return (
       <KeyboardAwareScrollView>
         <View style={styles.Container}>
-          <Animated.View
-            style={[styles.TopContainer, AnimatedStyle, OpactiyStyle]}>
+          <Animated.View style={[styles.TopContainer, AnimatedStyle]}>
             <Image
               style={styles.LogoContainer}
               source={require('../../assets/LogoA.png')}
@@ -137,13 +198,31 @@ export class Welcome extends Component {
             {this.state.Signup === false ? (
               <>
                 <View style={styles.LowerContainerTextInput}>
-                  <Textinput name={'mail'} placeholder={'Email'} />
-                  <Textinput name={'lock-closed'} placeholder={'Password'} />
+                  <Textinput
+                    name={'mail'}
+                    placeholder={'Email'}
+                    onChangeText={(Email) => {
+                      this.setState({Email});
+                    }}
+                  />
+                  <Textinput
+                    name={'lock-closed'}
+                    placeholder={'Password'}
+                    onChangeText={(Password) => {
+                      this.setState({Password});
+                    }}
+                  />
                   <TouchableOpacity style={styles.ForgotPass}>
                     <Text style={styles.ForgotPassText}>FORGOT PASSWORD !</Text>
                   </TouchableOpacity>
                 </View>
-                <Button Text={'Login'} TopMargin={{marginTop: h('5%')}} />
+                <Button
+                  Text={'Login'}
+                  TopMargin={{marginTop: h('5%')}}
+                  onPress={() => {
+                    this.Login();
+                  }}
+                />
                 <Text style={styles.or}>OR</Text>
                 <Button Text={'Enter as Guest'} />
 
@@ -162,90 +241,36 @@ export class Welcome extends Component {
             ) : (
               <>
                 {/* signup */}
-                <Animated.View style={[styles.SignupLogo, SignUpOpactiyStyle]}>
-                  <Text style={styles.SingupLogoText}>
-                    Signup With ProBlood
-                  </Text>
-                </Animated.View>
-                <Textinput name={'person'} placeholder={'Name'} />
-                <Textinput name={'mail'} placeholder={'Email'} />
-                <Textinput name={'card'} placeholder={'Cnic'} />
+                <View style={styles.topSpace} />
                 <Textinput
-                  name={'phone-portrait'}
-                  placeholder={'Phone'}
-                  keyboardType={'numeric'}
+                  name={'mail'}
+                  placeholder={'Email'}
+                  onChangeText={(SignupEmail) => {
+                    this.setState({SignupEmail});
+                  }}
                 />
 
-                {/* DROPDOWN s */}
-                <View style={styles.SelectBloodType}>
-                  <Text>Gender</Text>
-                  <Picker
-                    selectedValue={this.state.Gender}
-                    style={{height: 50, width: 100}}
-                    onValueChange={(itemValue, itemIndex) =>
-                      this.setState({Gender: itemValue})
-                    }>
-                    <Picker.Item label="Male" value="Male" />
-                    <Picker.Item label="Female" value="Female" />
-                    <Picker.Item label="Other" value="Other" />
-                  </Picker>
-                </View>
-                {/* DROPDOWN n */}
-
-                {/* DROPDOWN s */}
-                <View style={styles.SelectBloodType}>
-                  <Text>Blood Type</Text>
-                  <Picker
-                    selectedValue={this.state.BloodType}
-                    style={{height: 50, width: 100}}
-                    onValueChange={(itemValue, itemIndex) =>
-                      this.setState({BloodType: itemValue})
-                    }>
-                    <Picker.Item label="AB+" value="AB+" />
-                    <Picker.Item label="AB-" value="AB-" />
-                    <Picker.Item label="A+" value="A+" />
-                    <Picker.Item label="B+" value="B+" />
-                    <Picker.Item label="A-" value="A-" />
-                    <Picker.Item label="B-" value="B-" />
-                    <Picker.Item label="O-" value="O-" />
-                    <Picker.Item label="O+" value="O+" />
-                    <Picker.Item label="Other" value="Other" />
-                  </Picker>
-                </View>
-                {/* DROPDOWN n */}
-                {/* DROPDOWN s */}
-                <View style={styles.SelectBloodType}>
-                  <Text>Select Ethnicity</Text>
-                  <Picker
-                    selectedValue={this.state.Ethnicity}
-                    style={{height: 50, width: 100}}
-                    onValueChange={(itemValue, itemIndex) =>
-                      this.setState({Ethnicity: itemValue})
-                    }>
-                    <Picker.Item
-                      label="American Indian"
-                      value="American Indian"
-                    />
-                    <Picker.Item label="Alaska Native" value="Alaska Native" />
-                    <Picker.Item label="Asian" value="Asian" />
-                    <Picker.Item
-                      label="Black African American"
-                      value="Black African American"
-                    />
-                    <Picker.Item
-                      label="Native Hawaiian"
-                      value="Native Hawaiian"
-                    />
-                    <Picker.Item label="White" value="White" />
-                  </Picker>
-                </View>
-                {/* DROPDOWN n */}
-                <Textinput name={'lock-closed'} placeholder={'Password'} />
+                <Textinput
+                  name={'lock-closed'}
+                  placeholder={'Password'}
+                  onChangeText={(SignupPassword) => {
+                    this.setState({SignupPassword});
+                  }}
+                />
                 <Textinput
                   name={'lock-closed'}
                   placeholder={'Confirm Password'}
+                  onChangeText={(SignupConfirmPassword) => {
+                    this.setState({SignupConfirmPassword});
+                  }}
                 />
-                <Button Text={'Signup'} TopMargin={{marginTop: h('2%')}} />
+                <Button
+                  Text={'Signup'}
+                  TopMargin={{marginTop: h('5%')}}
+                  onPress={() => {
+                    this.UserSignUp();
+                  }}
+                />
 
                 <View style={styles.SignUp}>
                   <View style={styles.leftSignup}>
@@ -271,8 +296,8 @@ export class Welcome extends Component {
 
 const styles = StyleSheet.create({
   Container: {
-    height: h('120%'),
     width: w('100%'),
+    height: h('100%'),
     backgroundColor: Primary,
   },
   TopContainer: {
@@ -292,7 +317,7 @@ const styles = StyleSheet.create({
   LowerCotnainer: {
     backgroundColor: 'white',
     width: '100%',
-    height: h('120%'),
+    height: h('70%'),
 
     alignItems: 'center',
     borderTopRightRadius: h('8%'),
@@ -377,5 +402,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: h('1%'),
     // marginBottom: h('1%'),
+  },
+  topSpace: {
+    width: '100%',
+    height: h('10%'),
   },
 });
