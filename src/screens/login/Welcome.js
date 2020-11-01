@@ -13,6 +13,7 @@ import {w, h} from 'react-native-responsiveness';
 // Components
 import {Textinput, Button} from '../../components';
 import {Picker} from '@react-native-picker/picker';
+import {KeyboardAwareScrollView} from '@codler/react-native-keyboard-aware-scroll-view';
 
 export class Welcome extends Component {
   state = {
@@ -122,149 +123,156 @@ export class Welcome extends Component {
     };
 
     return (
-      <View style={styles.Container}>
-        <Animated.View
-          style={[styles.TopContainer, AnimatedStyle, OpactiyStyle]}>
-          <Image
-            style={styles.LogoContainer}
-            source={require('../../assets/LogoA.png')}
-          />
-        </Animated.View>
+      <KeyboardAwareScrollView>
+        <View style={styles.Container}>
+          <Animated.View
+            style={[styles.TopContainer, AnimatedStyle, OpactiyStyle]}>
+            <Image
+              style={styles.LogoContainer}
+              source={require('../../assets/LogoA.png')}
+            />
+          </Animated.View>
 
-        <Animated.View style={[styles.LowerCotnainer, AnimatedStyle2]}>
-          {this.state.Signup === false ? (
-            <>
-              <View style={styles.LowerContainerTextInput}>
+          <Animated.View style={[styles.LowerCotnainer, AnimatedStyle2]}>
+            {this.state.Signup === false ? (
+              <>
+                <View style={styles.LowerContainerTextInput}>
+                  <Textinput name={'mail'} placeholder={'Email'} />
+                  <Textinput name={'lock-closed'} placeholder={'Password'} />
+                  <TouchableOpacity style={styles.ForgotPass}>
+                    <Text style={styles.ForgotPassText}>FORGOT PASSWORD !</Text>
+                  </TouchableOpacity>
+                </View>
+                <Button Text={'Login'} TopMargin={{marginTop: h('5%')}} />
+                <Text style={styles.or}>OR</Text>
+                <Button Text={'Enter as Guest'} />
+
+                <View style={styles.SignUp}>
+                  <View style={styles.leftSignup}>
+                    <Text style={styles.SignupText}>DONT HAVE A ACCOUNT!</Text>
+                  </View>
+                  <TouchableOpacity
+                    delayPressIn={0}
+                    onPress={() => this.Signup()}
+                    style={styles.rightSignup}>
+                    <Text style={styles.SignupText2}>SignUp</Text>
+                  </TouchableOpacity>
+                </View>
+              </>
+            ) : (
+              <>
+                {/* signup */}
+                <Animated.View style={[styles.SignupLogo, SignUpOpactiyStyle]}>
+                  <Text style={styles.SingupLogoText}>
+                    Signup With ProBlood
+                  </Text>
+                </Animated.View>
+                <Textinput name={'person'} placeholder={'Name'} />
                 <Textinput name={'mail'} placeholder={'Email'} />
+                <Textinput name={'card'} placeholder={'Cnic'} />
+                <Textinput
+                  name={'phone-portrait'}
+                  placeholder={'Phone'}
+                  keyboardType={'numeric'}
+                />
+
+                {/* DROPDOWN s */}
+                <View style={styles.SelectBloodType}>
+                  <Text>Gender</Text>
+                  <Picker
+                    selectedValue={this.state.Gender}
+                    style={{height: 50, width: 100}}
+                    onValueChange={(itemValue, itemIndex) =>
+                      this.setState({Gender: itemValue})
+                    }>
+                    <Picker.Item label="Male" value="Male" />
+                    <Picker.Item label="Female" value="Female" />
+                    <Picker.Item label="Other" value="Other" />
+                  </Picker>
+                </View>
+                {/* DROPDOWN n */}
+
+                {/* DROPDOWN s */}
+                <View style={styles.SelectBloodType}>
+                  <Text>Blood Type</Text>
+                  <Picker
+                    selectedValue={this.state.BloodType}
+                    style={{height: 50, width: 100}}
+                    onValueChange={(itemValue, itemIndex) =>
+                      this.setState({BloodType: itemValue})
+                    }>
+                    <Picker.Item label="AB+" value="AB+" />
+                    <Picker.Item label="AB-" value="AB-" />
+                    <Picker.Item label="A+" value="A+" />
+                    <Picker.Item label="B+" value="B+" />
+                    <Picker.Item label="A-" value="A-" />
+                    <Picker.Item label="B-" value="B-" />
+                    <Picker.Item label="O-" value="O-" />
+                    <Picker.Item label="O+" value="O+" />
+                    <Picker.Item label="Other" value="Other" />
+                  </Picker>
+                </View>
+                {/* DROPDOWN n */}
+                {/* DROPDOWN s */}
+                <View style={styles.SelectBloodType}>
+                  <Text>Select Ethnicity</Text>
+                  <Picker
+                    selectedValue={this.state.Ethnicity}
+                    style={{height: 50, width: 100}}
+                    onValueChange={(itemValue, itemIndex) =>
+                      this.setState({Ethnicity: itemValue})
+                    }>
+                    <Picker.Item
+                      label="American Indian"
+                      value="American Indian"
+                    />
+                    <Picker.Item label="Alaska Native" value="Alaska Native" />
+                    <Picker.Item label="Asian" value="Asian" />
+                    <Picker.Item
+                      label="Black African American"
+                      value="Black African American"
+                    />
+                    <Picker.Item
+                      label="Native Hawaiian"
+                      value="Native Hawaiian"
+                    />
+                    <Picker.Item label="White" value="White" />
+                  </Picker>
+                </View>
+                {/* DROPDOWN n */}
                 <Textinput name={'lock-closed'} placeholder={'Password'} />
-                <TouchableOpacity style={styles.ForgotPass}>
-                  <Text style={styles.ForgotPassText}>FORGOT PASSWORD !</Text>
-                </TouchableOpacity>
-              </View>
-              <Button Text={'Login'} TopMargin={{marginTop: h('5%')}} />
-              <Text style={styles.or}>OR</Text>
-              <Button Text={'Enter as Guest'} />
+                <Textinput
+                  name={'lock-closed'}
+                  placeholder={'Confirm Password'}
+                />
+                <Button Text={'Signup'} TopMargin={{marginTop: h('2%')}} />
 
-              <View style={styles.SignUp}>
-                <View style={styles.leftSignup}>
-                  <Text style={styles.SignupText}>DONT HAVE A ACCOUNT!</Text>
+                <View style={styles.SignUp}>
+                  <View style={styles.leftSignup}>
+                    <Text style={styles.SignupText}>
+                      Already HAVE A ACCOUNT!
+                    </Text>
+                  </View>
+                  <TouchableOpacity
+                    delayPressIn={0}
+                    onPress={() => this.Signin()}
+                    style={styles.rightSignup}>
+                    <Text style={styles.SignupText2}>SignIn</Text>
+                  </TouchableOpacity>
                 </View>
-                <TouchableOpacity
-                  delayPressIn={0}
-                  onPress={() => this.Signup()}
-                  style={styles.rightSignup}>
-                  <Text style={styles.SignupText2}>SignUp</Text>
-                </TouchableOpacity>
-              </View>
-            </>
-          ) : (
-            <>
-              {/* signup */}
-              <Animated.View style={[styles.SignupLogo, SignUpOpactiyStyle]}>
-                <Text style={styles.SingupLogoText}>Signup With ProBlood</Text>
-              </Animated.View>
-              <Textinput name={'person'} placeholder={'Name'} />
-              <Textinput name={'mail'} placeholder={'Email'} />
-              <Textinput name={'card'} placeholder={'Cnic'} />
-              <Textinput
-                name={'phone-portrait'}
-                placeholder={'Phone'}
-                keyboardType={'numeric'}
-              />
-
-              {/* DROPDOWN s */}
-              <View style={styles.SelectBloodType}>
-                <Text>Gender</Text>
-                <Picker
-                  selectedValue={this.state.Gender}
-                  style={{height: 50, width: 100}}
-                  onValueChange={(itemValue, itemIndex) =>
-                    this.setState({Gender: itemValue})
-                  }>
-                  <Picker.Item label="Male" value="Male" />
-                  <Picker.Item label="Female" value="Female" />
-                  <Picker.Item label="Other" value="Other" />
-                </Picker>
-              </View>
-              {/* DROPDOWN n */}
-
-              {/* DROPDOWN s */}
-              <View style={styles.SelectBloodType}>
-                <Text>Blood Type</Text>
-                <Picker
-                  selectedValue={this.state.BloodType}
-                  style={{height: 50, width: 100}}
-                  onValueChange={(itemValue, itemIndex) =>
-                    this.setState({BloodType: itemValue})
-                  }>
-                  <Picker.Item label="AB+" value="AB+" />
-                  <Picker.Item label="AB-" value="AB-" />
-                  <Picker.Item label="A+" value="A+" />
-                  <Picker.Item label="B+" value="B+" />
-                  <Picker.Item label="A-" value="A-" />
-                  <Picker.Item label="B-" value="B-" />
-                  <Picker.Item label="O-" value="O-" />
-                  <Picker.Item label="O+" value="O+" />
-                  <Picker.Item label="Other" value="Other" />
-                </Picker>
-              </View>
-              {/* DROPDOWN n */}
-              {/* DROPDOWN s */}
-              <View style={styles.SelectBloodType}>
-                <Text>Select Ethnicity</Text>
-                <Picker
-                  selectedValue={this.state.Ethnicity}
-                  style={{height: 50, width: 100}}
-                  onValueChange={(itemValue, itemIndex) =>
-                    this.setState({Ethnicity: itemValue})
-                  }>
-                  <Picker.Item
-                    label="American Indian"
-                    value="American Indian"
-                  />
-                  <Picker.Item label="Alaska Native" value="Alaska Native" />
-                  <Picker.Item label="Asian" value="Asian" />
-                  <Picker.Item
-                    label="Black African American"
-                    value="Black African American"
-                  />
-                  <Picker.Item
-                    label="Native Hawaiian"
-                    value="Native Hawaiian"
-                  />
-                  <Picker.Item label="White" value="White" />
-                </Picker>
-              </View>
-              {/* DROPDOWN n */}
-              <Textinput name={'lock-closed'} placeholder={'Password'} />
-              <Textinput
-                name={'lock-closed'}
-                placeholder={'Confirm Password'}
-              />
-              <Button Text={'Signup'} TopMargin={{marginTop: h('2%')}} />
-
-              <View style={styles.SignUp}>
-                <View style={styles.leftSignup}>
-                  <Text style={styles.SignupText}>Already HAVE A ACCOUNT!</Text>
-                </View>
-                <TouchableOpacity
-                  delayPressIn={0}
-                  onPress={() => this.Signin()}
-                  style={styles.rightSignup}>
-                  <Text style={styles.SignupText2}>SignIn</Text>
-                </TouchableOpacity>
-              </View>
-            </>
-          )}
-        </Animated.View>
-      </View>
+              </>
+            )}
+          </Animated.View>
+        </View>
+      </KeyboardAwareScrollView>
     );
   }
 }
 
 const styles = StyleSheet.create({
   Container: {
-    flex: 1,
+    height: h('120%'),
+    width: w('100%'),
     backgroundColor: Primary,
   },
   TopContainer: {
@@ -284,7 +292,7 @@ const styles = StyleSheet.create({
   LowerCotnainer: {
     backgroundColor: 'white',
     width: '100%',
-    height: h('90%'),
+    height: h('120%'),
 
     alignItems: 'center',
     borderTopRightRadius: h('8%'),
