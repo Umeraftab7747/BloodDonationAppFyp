@@ -190,7 +190,7 @@ export class Welcome extends Component {
 
               {/* DROPDOWN s */}
               <View style={styles.SelectBloodType}>
-                <Text>BloodType</Text>
+                <Text>Blood Type</Text>
                 <Picker
                   selectedValue={this.state.BloodType}
                   style={{height: 50, width: 100}}
@@ -211,7 +211,7 @@ export class Welcome extends Component {
               {/* DROPDOWN n */}
               {/* DROPDOWN s */}
               <View style={styles.SelectBloodType}>
-                <Text>Ethnicity</Text>
+                <Text>Select Ethnicity</Text>
                 <Picker
                   selectedValue={this.state.Ethnicity}
                   style={{height: 50, width: 100}}
