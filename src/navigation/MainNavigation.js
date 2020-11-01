@@ -16,13 +16,13 @@ export class MainNavigation extends Component {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
-            name="Welcome"
-            component={Welcome}
+            name="Creditiential"
+            component={Creditiential}
             options={{headerShown: false}}
           />
           <Stack.Screen
-            name="Creditiential"
-            component={Creditiential}
+            name="Welcome"
+            component={Welcome}
             options={{headerShown: false}}
           />
 

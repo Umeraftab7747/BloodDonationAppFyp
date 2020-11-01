@@ -17,7 +17,7 @@ import {Icon} from 'react-native-elements';
 import {Textinput, Button, NavHeader} from '../../components';
 import {Picker} from '@react-native-picker/picker';
 import {KeyboardAwareScrollView} from '@codler/react-native-keyboard-aware-scroll-view';
-
+import DateTimePicker from 'react-native-modal-datetime-picker';
 export class Creditiential extends Component {
   state = {
     BloodType: 'A+',
@@ -27,6 +27,28 @@ export class Creditiential extends Component {
     Email: '',
     Cnic: '',
     Phone: '',
+    isDateTimePickerVisible: false,
+    DateDisplay: '',
+  };
+
+  showDateTimePicker = () => {
+    this.setState({isDateTimePickerVisible: true});
+  };
+
+  hideDateTimePicker = () => {
+    this.setState({
+      isDateTimePickerVisible: false,
+    });
+  };
+
+  handleDatePicked = (date) => {
+    this.setState({
+      DateDisplay: date,
+    });
+    const a = this.state.DateDisplay;
+
+    console.warn('A date has been picked: ', a);
+    this.hideDateTimePicker();
   };
 
   render() {
@@ -104,6 +126,21 @@ export class Creditiential extends Component {
           </View>
           {/* DROPDOWN n */}
 
+          <View>
+            <TouchableOpacity
+              style={styles.container2}
+              onPress={this.showDateTimePicker}>
+              <Text style={styles.btn}>DOB</Text>
+            </TouchableOpacity>
+
+            <DateTimePicker
+              isVisible={this.state.isDateTimePickerVisible}
+              onConfirm={this.handleDatePicked}
+              onCancel={this.hideDateTimePicker}
+              mode={'date'}
+            />
+          </View>
+
           <Button Text={'Add info'} TopMargin={{marginTop: h('2%')}} />
         </View>
       </KeyboardAwareScrollView>
@@ -133,5 +170,19 @@ const styles = StyleSheet.create({
     fontSize: h('2.3%'),
     marginTop: h('2%'),
     marginBottom: h('5%'),
+  },
+  container2: {
+    width: w('30%'),
+    height: h('7%'),
+    backgroundColor: Primary,
+    borderRadius: h('1%'),
+    marginTop: h('1%'),
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  btn: {
+    color: 'white',
+    // fontWeight: 'bold',
+    fontSize: h('2%'),
   },
 });
