@@ -41,11 +41,12 @@ export class Welcome extends Component {
   Login = async () => {
     if (this.state.Email !== '') {
       if (this.state.Password !== '') {
-        auth()
+        await auth()
           .signInWithEmailAndPassword(this.state.Email, this.state.Password)
-          .then(() => {
-            alert('User account signed in!');
-            this.props.navigation.replace('Creditiential');
+          .then((response) => {
+            const uid = response.user.uid;
+            // alert('User account signed in!');
+            // this.props.navigation.replace('Creditiential');
           })
           .catch((error) => {
             if (error.code === 'auth/wrong-password') {
@@ -71,6 +72,7 @@ export class Welcome extends Component {
     if (this.state.SignupEmail !== '') {
       if (this.state.SignupPassword !== '') {
         if (this.state.SignupPassword === this.state.SignupConfirmPassword) {
+          console.log(this.state.auth);
           auth()
             .createUserWithEmailAndPassword(
               this.state.SignupEmail,

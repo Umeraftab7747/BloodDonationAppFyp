@@ -17,7 +17,7 @@ import {Icon} from 'react-native-elements';
 import {Textinput, Button, NavHeader} from '../../components';
 import {Picker} from '@react-native-picker/picker';
 import {KeyboardAwareScrollView} from '@codler/react-native-keyboard-aware-scroll-view';
-import DateTimePicker from 'react-native-modal-datetime-picker';
+import DatePicker from 'react-native-datepicker';
 export class Creditiential extends Component {
   state = {
     BloodType: 'A+',
@@ -28,27 +28,7 @@ export class Creditiential extends Component {
     Cnic: '',
     Phone: '',
     isDateTimePickerVisible: false,
-    DateDisplay: '',
-  };
-
-  showDateTimePicker = () => {
-    this.setState({isDateTimePickerVisible: true});
-  };
-
-  hideDateTimePicker = () => {
-    this.setState({
-      isDateTimePickerVisible: false,
-    });
-  };
-
-  handleDatePicked = (date) => {
-    this.setState({
-      DateDisplay: date,
-    });
-    const a = this.state.DateDisplay;
-
-    console.warn('A date has been picked: ', a);
-    this.hideDateTimePicker();
+    dob: '',
   };
 
   render() {
@@ -56,7 +36,7 @@ export class Creditiential extends Component {
       <KeyboardAwareScrollView>
         <View style={styles.Container}>
           <Text style={styles.CompleteApp}>
-            COMPLETE DETAILS TO START USING APP
+            COMPLETE THE DETAILS TO START USING APP
           </Text>
           <Textinput name={'person'} placeholder={'Name'} />
           <Textinput name={'mail'} placeholder={'Email'} />
@@ -127,17 +107,32 @@ export class Creditiential extends Component {
           {/* DROPDOWN n */}
 
           <View>
-            <TouchableOpacity
-              style={styles.container2}
-              onPress={this.showDateTimePicker}>
-              <Text style={styles.btn}>DOB</Text>
-            </TouchableOpacity>
-
-            <DateTimePicker
-              isVisible={this.state.isDateTimePickerVisible}
-              onConfirm={this.handleDatePicked}
-              onCancel={this.hideDateTimePicker}
-              mode={'date'}
+            {/* datepicker */}
+            <DatePicker
+              style={{width: 200}}
+              date={this.state.dob}
+              mode="date"
+              placeholder="select date"
+              format="YYYY-MM-DD"
+              confirmBtnText="Confirm"
+              cancelBtnText="Cancel"
+              androidMode={'spinner'}
+              customStyles={{
+                dateIcon: {
+                  position: 'absolute',
+                  left: 0,
+                  top: 4,
+                  marginLeft: 0,
+                },
+                dateInput: {
+                  marginLeft: 36,
+                },
+                // ... You can check the source to find the other keys.
+              }}
+              onDateChange={(date) => {
+                this.setState({dob: date});
+                console.warn(this.state.dob);
+              }}
             />
           </View>
 
