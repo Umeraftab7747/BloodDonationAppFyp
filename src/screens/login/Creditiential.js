@@ -1,23 +1,15 @@
 import React, {Component} from 'react';
-import {
-  StyleSheet,
-  View,
-  Image,
-  Text,
-  FlatList,
-  TouchableOpacity,
-  Modal,
-} from 'react-native';
+import {StyleSheet, View, Text} from 'react-native';
 import {Primary} from '../../color';
 import {w, h} from 'react-native-responsiveness';
-import {Icon} from 'react-native-elements';
 
 // Components
 
-import {Textinput, Button, NavHeader} from '../../components';
+import {Textinput, Button} from '../../components';
 import {Picker} from '@react-native-picker/picker';
 import {KeyboardAwareScrollView} from '@codler/react-native-keyboard-aware-scroll-view';
 import DatePicker from 'react-native-datepicker';
+import firestore from '@react-native-firebase/firestore';
 export class Creditiential extends Component {
   state = {
     BloodType: 'A+',
@@ -27,8 +19,58 @@ export class Creditiential extends Component {
     Email: '',
     Cnic: '',
     Phone: '',
-    isDateTimePickerVisible: false,
+
     dob: '',
+    uid: '',
+  };
+
+  componentDidMount = () => {
+    const id = this.props.route.params.id;
+    this.setState({uid: id});
+  };
+
+  Addinfo = () => {
+    const {
+      Email,
+      Cnic,
+      Phone,
+      dob,
+      BloodType,
+      Gender,
+      Ethnicity,
+      Name,
+    } = this.state;
+    if (
+      Email === '' ||
+      Cnic === '' ||
+      Phone === '' ||
+      dob === '' ||
+      BloodType === '' ||
+      Gender === '' ||
+      Ethnicity === '' ||
+      Name === ''
+    ) {
+      alert('ALL FIELDS ARE REQUIRED');
+    } else {
+      firestore()
+        .collection('clientsdata')
+        .doc(this.state.uid)
+        .set({
+          bloodgroup: BloodType,
+          cnic: Cnic,
+          contact: Phone,
+          dob: dob,
+          email: Email,
+          ethnicity: Ethnicity,
+          gender: Gender,
+          name: Name,
+          password: '1234567899',
+        })
+        .then(() => {
+          console.warn('User added!');
+          this.props.navigation.navigate('DrawerNavigator');
+        });
+    }
   };
 
   render() {
@@ -38,13 +80,34 @@ export class Creditiential extends Component {
           <Text style={styles.CompleteApp}>
             COMPLETE THE DETAILS TO START USING APP
           </Text>
-          <Textinput name={'person'} placeholder={'Name'} />
-          <Textinput name={'mail'} placeholder={'Email'} />
-          <Textinput name={'card'} placeholder={'Cnic'} />
+          <Textinput
+            name={'person'}
+            placeholder={'Name'}
+            onChangeText={(Name) => {
+              this.setState({Name});
+            }}
+          />
+          <Textinput
+            name={'mail'}
+            placeholder={'Email'}
+            onChangeText={(Email) => {
+              this.setState({Email});
+            }}
+          />
+          <Textinput
+            name={'card'}
+            placeholder={'Cnic'}
+            onChangeText={(Cnic) => {
+              this.setState({Cnic});
+            }}
+          />
           <Textinput
             name={'phone-portrait'}
             placeholder={'Phone'}
             keyboardType={'numeric'}
+            onChangeText={(Phone) => {
+              this.setState({Phone});
+            }}
           />
 
           {/* DROPDOWN s */}
@@ -136,7 +199,13 @@ export class Creditiential extends Component {
             />
           </View>
 
-          <Button Text={'Add info'} TopMargin={{marginTop: h('2%')}} />
+          <Button
+            Text={'Add info'}
+            TopMargin={{marginTop: h('2%')}}
+            onPress={() => {
+              this.Addinfo();
+            }}
+          />
         </View>
       </KeyboardAwareScrollView>
     );

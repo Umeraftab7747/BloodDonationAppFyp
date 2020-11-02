@@ -12,9 +12,9 @@ import {w, h} from 'react-native-responsiveness';
 
 // Components
 import {Textinput, Button} from '../../components';
-import {Picker} from '@react-native-picker/picker';
 import {KeyboardAwareScrollView} from '@codler/react-native-keyboard-aware-scroll-view';
 import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 
 export class Welcome extends Component {
   state = {
@@ -43,10 +43,20 @@ export class Welcome extends Component {
       if (this.state.Password !== '') {
         await auth()
           .signInWithEmailAndPassword(this.state.Email, this.state.Password)
-          .then((response) => {
-            const uid = response.user.uid;
-            // alert('User account signed in!');
-            // this.props.navigation.replace('Creditiential');
+          .then(async (response) => {
+            await firestore()
+              .collection('clientsdata')
+              .doc(response.user.uid)
+              .get()
+              .then((documentSnapshot) => {
+                if (documentSnapshot.exists) {
+                  this.props.navigation.replace('DrawerNavigator');
+                } else {
+                  this.props.navigation.replace('Creditiential', {
+                    id: response.user.uid,
+                  });
+                }
+              });
           })
           .catch((error) => {
             if (error.code === 'auth/wrong-password') {
