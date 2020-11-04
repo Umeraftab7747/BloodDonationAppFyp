@@ -14,10 +14,32 @@ import {Icon} from 'react-native-elements';
 
 // Components
 import {NavHeader} from '../../components';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import firestore from '@react-native-firebase/firestore';
 
 export class Profile extends Component {
-  state = {};
+  state = {userid: '', data: []};
+  componentDidMount = async () => {
+    AsyncStorage.getItem('userData', (error, data) => {
+      const userData = JSON.parse(data);
+      if (userData !== null) {
+        this.setState({
+          userid: userData.id,
+        });
+        this.userinfo();
+      } else {
+        console.warn('No data found');
+      }
+    });
+  };
 
+  userinfo = async () => {
+    const user = await firestore()
+      .collection('clientsdata')
+      .doc(this.state.userid)
+      .get();
+    this.setState({data: user.data()});
+  };
   render() {
     return (
       <View style={styles.Container}>
@@ -35,17 +57,23 @@ export class Profile extends Component {
             />
           </View>
           <View style={styles.TopViewNameID}>
-            <Text style={styles.TopText}>Name: Talha</Text>
-            <Text style={styles.TopText}>User ID: 0321-123-411-22</Text>
+            <Text style={styles.TopText}>Name: {this.state.data.name}</Text>
+            <Text style={styles.TopText}>User ID: {this.state.data.cnic}</Text>
           </View>
         </View>
         <View style={styles.MiddleView}>
-          <Text style={styles.MiddleText}>Email: UMERAFTAB888@gmail.com</Text>
-          <Text style={styles.MiddleText}>Cnic: 0401-5115-11123-12</Text>
-          <Text style={styles.MiddleText}>BloodType: A+</Text>
-          <Text style={styles.MiddleText}>Gender: Male</Text>
-          <Text style={styles.MiddleText}>Birthday: 29-Feb-2020</Text>
-          <Text style={styles.MiddleText}>Ethancity: Asian</Text>
+          <Text style={styles.MiddleText}>Email: {this.state.data.email}</Text>
+          <Text style={styles.MiddleText}>Cnic:{this.state.data.cnic}</Text>
+          <Text style={styles.MiddleText}>
+            BloodType: {this.state.data.bloodgroup}
+          </Text>
+          <Text style={styles.MiddleText}>
+            Gender: {this.state.data.gender}
+          </Text>
+          <Text style={styles.MiddleText}>Birthday: {this.state.data.dob}</Text>
+          <Text style={styles.MiddleText}>
+            Ethancity: {this.state.data.ethnicity}
+          </Text>
         </View>
       </View>
     );

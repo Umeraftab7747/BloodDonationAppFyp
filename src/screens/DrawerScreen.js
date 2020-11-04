@@ -6,16 +6,40 @@ import {w, h} from 'react-native-responsiveness';
 import {Primary} from '../color';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {Icon} from 'react-native-elements';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import firestore from '@react-native-firebase/firestore';
 
 export class DrawerScreen extends Component {
+  state = {userid: '', data: []};
+  componentDidMount = async () => {
+    AsyncStorage.getItem('userData', (error, data) => {
+      const userData = JSON.parse(data);
+      if (userData !== null) {
+        this.setState({
+          userid: userData.id,
+        });
+        this.userinfo();
+      } else {
+        console.warn('No data found');
+      }
+    });
+  };
+
+  userinfo = async () => {
+    const user = await firestore()
+      .collection('clientsdata')
+      .doc(this.state.userid)
+      .get();
+    this.setState({data: user.data()});
+  };
   render() {
     return (
       <View style={styles.container}>
         <SafeAreaView />
         <View style={styles.name}>
           <View style={styles.leftr}>
-            <Text style={styles.ntxt}>Name: Umer Aftab</Text>
-            <Text style={styles.dtxt}>UserID: 0841-1512-11</Text>
+            <Text style={styles.ntxt}>Name:{this.state.data.name}</Text>
+            <Text style={styles.dtxt}>UserID:{this.state.data.cnic} </Text>
           </View>
         </View>
 
@@ -147,7 +171,7 @@ const styles = StyleSheet.create({
     height: h('18%'),
     alignItems: 'center',
   },
-  dtxt: {fontSize: h('2%'), color: '#fff7', marginLeft: -h('17%')},
+  dtxt: {fontSize: h('2%'), color: '#fff7', marginLeft: -h('10%')},
   img: {
     resizeMode: 'center',
     height: '100%',

@@ -36,6 +36,7 @@ export class Welcome extends Component {
     setTimeout(() => {
       this.startAnimation();
     }, 100);
+
     // this.UserSignUp();
   };
 
@@ -50,23 +51,20 @@ export class Welcome extends Component {
               .doc(response.user.uid)
               .get()
               .then((documentSnapshot) => {
-                if (documentSnapshot.exists) {
-                  this.props.navigation.replace('DrawerNavigator');
-                } else {
-                  const values = {
-                    id: response.user.uid,
-                  };
-                  AsyncStorage.setItem(
-                    'userData',
-                    JSON.stringify(values),
-                    () => {
-                      console.warn(response.user.uid);
-                      this.props.navigation.replace('Creditiential', {
-                        id: response.user.uid,
-                      });
-                    },
-                  );
-                }
+                const values = {
+                  id: response.user.uid,
+                };
+
+                AsyncStorage.setItem('userData', JSON.stringify(values), () => {
+                  console.warn(values);
+                  if (documentSnapshot.exists) {
+                    this.props.navigation.replace('DrawerNavigator');
+                  } else {
+                    this.props.navigation.replace('Creditiential', {
+                      id: response.user.uid,
+                    });
+                  }
+                });
               });
           })
           .catch((error) => {

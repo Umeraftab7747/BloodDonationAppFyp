@@ -17,7 +17,7 @@ import firestore from '@react-native-firebase/firestore';
 import {NavHeader} from '../../components';
 
 export class Notification extends Component {
-  state = {data: [], data2: [{name: 'umer'}]};
+  state = {data: []};
   componentDidMount = () => {
     this.dataFetch();
   };
