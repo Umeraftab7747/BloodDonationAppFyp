@@ -314,7 +314,7 @@ export class Request extends Component {
         <FlatList
           data={this.state.Hospitals}
           renderItem={({item}) => this.renderitem(item)}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item.key}
         />
 
         {/* end of blood bank */}

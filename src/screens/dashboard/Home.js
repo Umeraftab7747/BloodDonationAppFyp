@@ -145,7 +145,7 @@ export class Home extends Component {
         key: '19',
       },
     ],
-    modalVisible: true,
+    modalVisible: false,
   };
 
   render() {
@@ -157,7 +157,17 @@ export class Home extends Component {
             this.props.navigation.openDrawer();
           }}
         />
-
+        <View style={styles.TextContainer}>
+          <Text style={styles.Disclaimer}>DISCLAIMER</Text>
+          <Text style={styles.ModalText}>
+            The purpose of ProBlood is connectivity. Therefore, ProBlood will
+            not be responsible for the quality of blood products.ProBlood is not
+            to be held responsible if user has entered incorrect info during
+            sign up.ProBlood recommends that all advance blood bookings be made
+            24 hours prior the requirement. For urgent cases, use search feature
+            to find blood product at nearest blood bank.
+          </Text>
+        </View>
         {/* FlatList */}
 
         <FlatList
@@ -178,47 +188,6 @@ export class Home extends Component {
             </View>
           )}
         />
-
-        {/* Modal */}
-        <Modal
-          animationType="fade"
-          transparent={true}
-          visible={this.state.modalVisible}
-          onRequestClose={() => {
-            this.setState({modalVisible: false});
-          }}>
-          <View style={styles.ModalContainer}>
-            <View style={styles.ModalAlert}>
-              <View style={styles.ModalAlerttop}>
-                <TouchableOpacity
-                  delayPressIn={0}
-                  onPress={() => {
-                    this.setState({modalVisible: false});
-                  }}>
-                  <Icon
-                    name={'close-circle-outline'}
-                    type="ionicon"
-                    color="#fff"
-                    size={35}
-                  />
-                </TouchableOpacity>
-              </View>
-
-              <View style={styles.ModalAlertmiddle}>
-                <Text style={styles.Disclaimer}>DISCLAIMER</Text>
-                <Text style={styles.ModalText}>
-                  The purpose of ProBlood is connectivity. Therefore, ProBlood
-                  will not be responsible for the quality of blood
-                  products.ProBlood is not to be held responsible if user has
-                  entered incorrect info during sign up.ProBlood recommends that
-                  all advance blood bookings be made 24 hours prior the
-                  requirement. For urgent cases, use search feature to find
-                  blood product at nearest blood bank.
-                </Text>
-              </View>
-            </View>
-          </View>
-        </Modal>
       </View>
     );
   }
@@ -267,7 +236,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   ModalText: {
-    color: 'white',
+    color: Primary,
     fontSize: h('2.3%'),
   },
   members: {
@@ -294,5 +263,11 @@ const styles = StyleSheet.create({
     fontSize: h('3%'),
     marginTop: h('2%'),
     marginBottom: h('2%'),
+    color: 'black',
+  },
+  TextContainer: {
+    paddingLeft: h('3%'),
+    paddingRight: h('3%'),
+    alignItems: 'center',
   },
 });

@@ -46,26 +46,36 @@ export class Welcome extends Component {
         await auth()
           .signInWithEmailAndPassword(this.state.Email, this.state.Password)
           .then(async (response) => {
-            await firestore()
-              .collection('clientsdata')
-              .doc(response.user.uid)
-              .get()
-              .then((documentSnapshot) => {
-                const values = {
-                  id: response.user.uid,
-                };
-
-                AsyncStorage.setItem('userData', JSON.stringify(values), () => {
-                  console.warn(values);
-                  if (documentSnapshot.exists) {
-                    this.props.navigation.replace('DrawerNavigator');
-                  } else {
-                    this.props.navigation.replace('Creditiential', {
+            auth().onAuthStateChanged(async (user) => {
+              if (user.emailVerified) {
+                await firestore()
+                  .collection('clientsdata')
+                  .doc(response.user.uid)
+                  .get()
+                  .then((documentSnapshot) => {
+                    const values = {
                       id: response.user.uid,
-                    });
-                  }
-                });
-              });
+                    };
+
+                    AsyncStorage.setItem(
+                      'userData',
+                      JSON.stringify(values),
+                      () => {
+                        console.warn(values);
+                        if (documentSnapshot.exists) {
+                          this.props.navigation.replace('DrawerNavigator');
+                        } else {
+                          this.props.navigation.replace('Creditiential', {
+                            id: response.user.uid,
+                          });
+                        }
+                      },
+                    );
+                  });
+              } else {
+                alert('Account Not verified');
+              }
+            });
           })
           .catch((error) => {
             if (error.code === 'auth/wrong-password') {
@@ -98,7 +108,10 @@ export class Welcome extends Component {
               this.state.SignupPassword,
             )
             .then(() => {
-              alert('User account created');
+              auth().onAuthStateChanged(function (user) {
+                user.sendEmailVerification();
+                alert('Verify Email and Login');
+              });
             })
             .catch((error) => {
               if (error.code === 'auth/email-already-in-use') {
