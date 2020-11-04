@@ -16,13 +16,13 @@ export class MainNavigation extends Component {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
-            name="Welcome"
-            component={Welcome}
+            name="DrawerNavigator"
+            component={DrawerNavigator}
             options={{headerShown: false}}
           />
           <Stack.Screen
-            name="DrawerNavigator"
-            component={DrawerNavigator}
+            name="Welcome"
+            component={Welcome}
             options={{headerShown: false}}
           />
 

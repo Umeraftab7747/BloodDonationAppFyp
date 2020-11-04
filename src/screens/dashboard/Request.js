@@ -19,9 +19,138 @@ import CheckBox from '@react-native-community/checkbox';
 import {Picker} from '@react-native-picker/picker';
 import DatePicker from 'react-native-datepicker';
 import firestore from '@react-native-firebase/firestore';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export class Request extends Component {
   state = {
+    Hospitals: [
+      {
+        name: 'Agha Khan Hospital',
+        number: '+9221111911911',
+        address:
+          'National Stadium Rd, Aga Khan University Hospital, Karachi, Sindh, Pakistan',
+        key: '1',
+      },
+      {
+        name: 'Fatmid Foundation',
+        number: '+922132225284',
+        address: 'Garden East Karachi, Sindh, Pakistan',
+        key: '2',
+      },
+      {
+        name: 'Hussaini Blood Bank ',
+        number: '+923332569795 ',
+        address:
+          'Plot# ST02,Block T,Qalandaria Chowk,opposite Talib Chaman Park,Block J North Nazimabad Town,Karachi,Sindh,Pakistan',
+        key: '3',
+      },
+      {
+        name: 'Hussaini Blood Bank',
+        number: '+922134834782',
+        address:
+          'Shan Hospital, Block 5 Gulshan-e-Iqbal, Karachi, Sindh, Pakistan',
+        key: '4',
+      },
+      {
+        name: 'Hussaini Blood Bank',
+        number: '+923333998308',
+        address:
+          'Lady Dufferin Hospital, Chand Bibi Rd, Adhumal Oodharam Quarter, Karachi, Sindh, Pakistan',
+        key: '5',
+      },
+      {
+        name: 'Hussaini Blood Bank',
+        number: '+923333998302',
+        address:
+          'Plot# SB59, Block K North Nazimabad Town, Karachi, Sindh, Pakistan',
+        key: '6',
+      },
+      {
+        name: 'Hussaini Blood Bank',
+        number: '+923333998321',
+        address:
+          'South City Hospital, 12 Rojhan St, Block 5 Block 3 Clifton, Karachi, Sindh, Pakistan',
+        key: '7',
+      },
+      {
+        name: 'Hussaini Blood Bank',
+        number: '+922136353125',
+        address:
+          'Afsar Memorial Hospital Gulshan-I-Maymar Rd, Sector W, Karachi, Sindh, Pakistan',
+        key: '8',
+      },
+      {
+        name: 'Hussaini Blood Bank',
+        number: '+923333998320',
+        address:
+          '22-23 Shaheed-e-Millat Road,Bihar Muslim Society Modern Society BMCHS Sharfabad, Karachi, Sindh, Pakistan',
+        key: '9',
+      },
+      {
+        name: 'Saylani Welfare Blood Bank',
+        number: '+922134990413',
+        address:
+          'Plot# 3/A-5, Block 4 Gulshan-e-Iqbal, Karachi, Sindh, Pakistan',
+        key: '10',
+      },
+      {
+        name: 'Liaquat National Hospital',
+        number: '9221111456456',
+        address:
+          'National stadium Rd, Liaquat National Hospital, Karachi, Sindh, Pakistan',
+        key: '11',
+      },
+      {
+        name: 'Indus Hospital',
+        number: '+922135112710',
+        address: 'Mehran Town Sector 24 Korangi, Karachi, Sindh, Pakistan',
+        key: '12',
+      },
+      {
+        name: 'Burhani Blood Bank',
+        number: '+922136644490',
+        address:
+          'Saifee Rd, Block F North Nazimabad Town, Karachi, Sindh, Pakistan',
+        key: '13',
+      },
+      {
+        name: 'NIBD Blood Bank',
+        number: '+922134821502',
+        address: 'National Stadium Colony, Karachi, Sindh, Pakistan',
+        key: '14',
+      },
+      {
+        name: 'Emergency Blood Bank',
+        number: '+923332185621',
+        address: 'Faisal Cantonment, Karachi, Sindh, Pakistan',
+        key: '15',
+      },
+      {
+        name: 'DOW Blood Bank',
+        number: '+922199232660',
+        address: 'Gulzar-e-Hijri Gulshan-e-Iqbal, Karachi, Sindh, Pakistan',
+        key: '16',
+      },
+      {
+        name: 'Sahara Blood Bank',
+        number: 'NA',
+        address: 'M.A Jinnah Rd, Jamshed Quarters Karachi, Sindh, Pakistan',
+        key: '17',
+      },
+      {
+        name: 'PWA Blood Bank',
+        number: '+922132735214',
+        address: 'New Labour Colony Nanakwara, Karachi, Sindh, Pakistan',
+        key: '18',
+      },
+      {
+        name: 'Muhammadi Blood Bank',
+        number: '+923162946498',
+        address:
+          '280 Britto Rd, Soldier Bazaar Catholic Colony, Karachi, Sindh, Pakistan',
+        key: '19',
+      },
+    ],
     checked: false,
     checked1: false,
     searched: '',
@@ -29,7 +158,35 @@ export class Request extends Component {
     modalVisible: false,
     date: '',
     units: '',
+    userid: '',
+    data: [],
   };
+  // start
+
+  componentDidMount = async () => {
+    AsyncStorage.getItem('userData', (error, data) => {
+      const userData = JSON.parse(data);
+      if (userData !== null) {
+        this.setState({
+          userid: userData.id,
+        });
+        this.userinfo();
+      } else {
+        console.warn('No data found');
+      }
+    });
+  };
+
+  userinfo = async () => {
+    const user = await firestore()
+      .collection('clientsdata')
+      .doc(this.state.userid)
+      .get();
+    this.setState({data: user.data()});
+  };
+
+  // end
+
   Notifcation = () => {
     const {BloodType, units, date} = this.state;
     if (BloodType === '' || units === '' || date === '') {
@@ -39,8 +196,8 @@ export class Request extends Component {
         .collection('bloodreq')
         .add({
           bloodgroup: BloodType,
-          cnic: '1241-41412---12',
-          name: 'UMER AFTAB',
+          cnic: this.state.data.cnic,
+          name: this.state.data.name,
           needdate: date,
           status: null,
           timee: new Date(),
@@ -51,6 +208,26 @@ export class Request extends Component {
         });
     }
   };
+
+  renderitem = (item) => (
+    <View style={styles.BloodData}>
+      <View style={styles.left}>
+        <Text style={styles.hospitalText}>{item.name}</Text>
+        <Text style={styles.hospitalnumber}>{item.number}</Text>
+        <Text style={styles.hospitaladdress}>{item.address}</Text>
+      </View>
+
+      <View style={styles.right}>
+        <TouchableOpacity
+          onPress={() => {
+            this.setState({modalVisible: true});
+          }}>
+          <Text>Heart Button</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+
   render() {
     return (
       <View style={styles.Container}>
@@ -133,21 +310,13 @@ export class Request extends Component {
           </View>
         </View>
         {/* DATA BANK */}
-        <View style={styles.BloodData}>
-          <View style={styles.left}>
-            <Text style={styles.hospitalText}>HOSPITAL</Text>
-            <Text style={styles.hospitalnumber}>03040607747</Text>
-          </View>
 
-          <View style={styles.right}>
-            <TouchableOpacity
-              onPress={() => {
-                this.setState({modalVisible: true});
-              }}>
-              <Text>Heart Button</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
+        <FlatList
+          data={this.state.Hospitals}
+          renderItem={({item}) => this.renderitem(item)}
+          keyExtractor={(item) => item.id}
+        />
+
         {/* end of blood bank */}
         {/* start of modal */}
 
@@ -378,6 +547,8 @@ const styles = StyleSheet.create({
     height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
+    paddingLeft: h('1.2%'),
+    paddingRight: h('1.2%'),
   },
 
   right: {
@@ -425,5 +596,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: h('2%'),
     // marginTop: -h('5%'),
+  },
+  hospitaladdress: {
+    color: '#0006',
+    fontSize: h('1.8%'),
   },
 });
