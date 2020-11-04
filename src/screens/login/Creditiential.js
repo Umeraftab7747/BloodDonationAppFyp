@@ -10,6 +10,7 @@ import {Picker} from '@react-native-picker/picker';
 import {KeyboardAwareScrollView} from '@codler/react-native-keyboard-aware-scroll-view';
 import DatePicker from 'react-native-datepicker';
 import firestore from '@react-native-firebase/firestore';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 export class Creditiential extends Component {
   state = {
     BloodType: 'A+',

@@ -21,14 +21,14 @@ export class MainNavigation extends Component {
             options={{headerShown: false}}
           />
           <Stack.Screen
-            name="Creditiential"
-            component={Creditiential}
+            name="DrawerNavigator"
+            component={DrawerNavigator}
             options={{headerShown: false}}
           />
 
           <Stack.Screen
-            name="DrawerNavigator"
-            component={DrawerNavigator}
+            name="Creditiential"
+            component={Creditiential}
             options={{headerShown: false}}
           />
 

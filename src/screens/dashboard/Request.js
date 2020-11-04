@@ -17,10 +17,40 @@ import {Icon} from 'react-native-elements';
 import {NavHeader} from '../../components';
 import CheckBox from '@react-native-community/checkbox';
 import {Picker} from '@react-native-picker/picker';
+import DatePicker from 'react-native-datepicker';
+import firestore from '@react-native-firebase/firestore';
 
 export class Request extends Component {
-  state = {checked: false, checked1: false, searched: '', BloodType: 'A+'};
-
+  state = {
+    checked: false,
+    checked1: false,
+    searched: '',
+    BloodType: 'A+',
+    modalVisible: false,
+    date: '',
+    units: '',
+  };
+  Notifcation = () => {
+    const {BloodType, units, date} = this.state;
+    if (BloodType === '' || units === '' || date === '') {
+      alert('ALL FIELDS ARE REQUIRED TO MAKE A REQUEST');
+    } else {
+      firestore()
+        .collection('bloodreq')
+        .add({
+          bloodgroup: BloodType,
+          cnic: '1241-41412---12',
+          name: 'UMER AFTAB',
+          needdate: date,
+          status: null,
+          timee: new Date(),
+          units: units,
+        })
+        .then(() => {
+          console.warn('User added!');
+        });
+    }
+  };
   render() {
     return (
       <View style={styles.Container}>
@@ -102,6 +132,117 @@ export class Request extends Component {
             </TouchableOpacity>
           </View>
         </View>
+        {/* DATA BANK */}
+        <View style={styles.BloodData}>
+          <View style={styles.left}>
+            <Text style={styles.hospitalText}>HOSPITAL</Text>
+            <Text style={styles.hospitalnumber}>03040607747</Text>
+          </View>
+
+          <View style={styles.right}>
+            <TouchableOpacity
+              onPress={() => {
+                this.setState({modalVisible: true});
+              }}>
+              <Text>Heart Button</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        {/* end of blood bank */}
+        {/* start of modal */}
+
+        <Modal
+          animationType="fade"
+          transparent={true}
+          visible={this.state.modalVisible}
+          onRequestClose={() => {
+            this.setState({modalVisible: false});
+          }}>
+          <View style={styles.ModalContainer}>
+            <View style={styles.ModalAlert}>
+              <View style={styles.ModalAlerttop}>
+                <TouchableOpacity
+                  delayPressIn={0}
+                  onPress={() => {
+                    this.setState({modalVisible: false});
+                  }}>
+                  <Icon
+                    name={'close-circle-outline'}
+                    type="ionicon"
+                    color="#fff"
+                    size={35}
+                  />
+                </TouchableOpacity>
+              </View>
+
+              <View style={styles.ModalAlertmiddle}>
+                <View style={styles.Quantity}>
+                  <Text>Quantity</Text>
+                  <TextInput
+                    style={styles.QuantityTextField}
+                    placeholder={'no of packets'}
+                    onChangeText={(units) => {
+                      this.setState({units});
+                    }}
+                  />
+                </View>
+                <DatePicker
+                  style={{width: 200}}
+                  date={this.state.date}
+                  mode="date"
+                  placeholder="select date"
+                  format="YYYY-MM-DD"
+                  confirmBtnText="Confirm"
+                  cancelBtnText="Cancel"
+                  androidMode={'spinner'}
+                  customStyles={{
+                    dateIcon: {
+                      position: 'absolute',
+                      left: 0,
+                      top: 4,
+                      marginLeft: 0,
+                    },
+                    dateInput: {
+                      marginLeft: 36,
+                    },
+                    // ... You can check the source to find the other keys.
+                  }}
+                  onDateChange={(date) => {
+                    this.setState({date: date});
+                    console.warn(this.state.date);
+                  }}
+                />
+                <View style={styles.SelectBloodType}>
+                  <Text>Select Blood Type</Text>
+                  <Picker
+                    selectedValue={this.state.BloodType}
+                    style={{height: 50, width: 100}}
+                    onValueChange={(itemValue, itemIndex) =>
+                      this.setState({BloodType: itemValue})
+                    }>
+                    <Picker.Item label="AB+" value="AB+" />
+                    <Picker.Item label="AB-" value="AB-" />
+                    <Picker.Item label="A+" value="A+" />
+                    <Picker.Item label="B+" value="B+" />
+                    <Picker.Item label="A-" value="A-" />
+                    <Picker.Item label="B-" value="B-" />
+                    <Picker.Item label="O-" value="O-" />
+                    <Picker.Item label="O+" value="O+" />
+                    <Picker.Item label="Other" value="Other" />
+                  </Picker>
+                </View>
+                <TouchableOpacity
+                  onPress={() => {
+                    this.Notifcation();
+                  }}>
+                  <Text>Request</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </Modal>
+
+        {/* End of modal */}
       </View>
     );
   }
@@ -172,7 +313,7 @@ const styles = StyleSheet.create({
   },
   QuantityTextField: {
     backgroundColor: 'white',
-    width: '20%',
+    width: '30%',
     color: 'black',
     height: '100%',
 
@@ -220,5 +361,69 @@ const styles = StyleSheet.create({
     backgroundColor: '#158467',
     width: 20,
     height: 20,
+  },
+  BloodData: {
+    width: w('90%'),
+    height: h('20%'),
+    backgroundColor: 'red',
+
+    // alignItems: 'center',
+    marginTop: h('1%'),
+    borderRadius: h('1.1%'),
+    flexDirection: 'row',
+  },
+  left: {
+    backgroundColor: 'gold',
+    width: '70%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  right: {
+    backgroundColor: 'orange',
+    width: '30%',
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  hospitalText: {
+    color: 'black',
+    fontSize: h('3%'),
+    fontWeight: 'bold',
+  },
+  hospitalnumber: {
+    color: 'black',
+    fontSize: h('2%'),
+  },
+  ModalContainer: {
+    backgroundColor: '#0004',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  ModalAlert: {
+    backgroundColor: 'gold',
+    width: w('96%'),
+    height: h('40%'),
+    borderRadius: h('2%'),
+  },
+  ModalAlerttop: {
+    // backgroundColor: 'gold',
+    width: '100%',
+    height: '15%',
+    // justifyContent: 'flex-end',
+    alignItems: 'flex-end',
+  },
+  ModalAlertmiddle: {
+    backgroundColor: 'green',
+    width: '100%',
+    height: '80%',
+    paddingLeft: h('1.2%'),
+    paddingRight: h('1.2%'),
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: h('2%'),
+    // marginTop: -h('5%'),
   },
 });

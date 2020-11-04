@@ -15,6 +15,7 @@ import {Textinput, Button} from '../../components';
 import {KeyboardAwareScrollView} from '@codler/react-native-keyboard-aware-scroll-view';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export class Welcome extends Component {
   state = {
@@ -52,9 +53,19 @@ export class Welcome extends Component {
                 if (documentSnapshot.exists) {
                   this.props.navigation.replace('DrawerNavigator');
                 } else {
-                  this.props.navigation.replace('Creditiential', {
+                  const values = {
                     id: response.user.uid,
-                  });
+                  };
+                  AsyncStorage.setItem(
+                    'userData',
+                    JSON.stringify(values),
+                    () => {
+                      console.warn(response.user.uid);
+                      this.props.navigation.replace('Creditiential', {
+                        id: response.user.uid,
+                      });
+                    },
+                  );
                 }
               });
           })
