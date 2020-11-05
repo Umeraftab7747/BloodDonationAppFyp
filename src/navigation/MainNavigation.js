@@ -25,7 +25,6 @@ export class MainNavigation extends Component {
             component={DrawerNavigator}
             options={{headerShown: false}}
           />
-
           <Stack.Screen
             name="Creditiential"
             component={Creditiential}

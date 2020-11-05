@@ -210,22 +210,42 @@ export class Request extends Component {
   };
 
   renderitem = (item) => (
-    <View style={styles.BloodData}>
-      <View style={styles.left}>
-        <Text style={styles.hospitalText}>{item.name}</Text>
-        <Text style={styles.hospitalnumber}>{item.number}</Text>
-        <Text style={styles.hospitaladdress}>{item.address}</Text>
-      </View>
+    <>
+      {this.state.searched === '' ? null : (
+        <View style={styles.BloodData}>
+          <View style={styles.left}>
+            <Text style={styles.hospitalText}>{item.name}</Text>
+            <Text style={styles.hospitalnumber}>{item.number}</Text>
+            <Text style={styles.hospitaladdress}>{item.address}</Text>
+          </View>
 
-      <View style={styles.right}>
-        <TouchableOpacity
-          onPress={() => {
-            this.setState({modalVisible: true});
-          }}>
-          <Text>Heart Button</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+          <View style={styles.right}>
+            {this.state.searched === 'Advance' ? (
+              <TouchableOpacity
+                onPress={() => {
+                  this.setState({modalVisible: true});
+                }}>
+                <Icon name={'heart'} type="ionicon" color={'#ffff'} size={35} />
+              </TouchableOpacity>
+            ) : null}
+
+            {this.state.searched === 'Emergency' ? (
+              <TouchableOpacity
+                onPress={() => {
+                  this.setState({modalVisible: true});
+                }}>
+                <Icon
+                  name={'arrow-forward-circle'}
+                  type="ionicon"
+                  color={'#ffff'}
+                  size={35}
+                />
+              </TouchableOpacity>
+            ) : null}
+          </View>
+        </View>
+      )}
+    </>
   );
 
   render() {
@@ -300,6 +320,9 @@ export class Request extends Component {
               <TextInput
                 style={styles.QuantityTextField}
                 placeholder={'4 packets'}
+                onChangeText={(units) => {
+                  this.setState({units});
+                }}
               />
             </View>
           </View>
@@ -338,23 +361,13 @@ export class Request extends Component {
                   <Icon
                     name={'close-circle-outline'}
                     type="ionicon"
-                    color="#fff"
+                    color={Primary}
                     size={35}
                   />
                 </TouchableOpacity>
               </View>
 
               <View style={styles.ModalAlertmiddle}>
-                <View style={styles.Quantity}>
-                  <Text>Quantity</Text>
-                  <TextInput
-                    style={styles.QuantityTextField}
-                    placeholder={'no of packets'}
-                    onChangeText={(units) => {
-                      this.setState({units});
-                    }}
-                  />
-                </View>
                 <DatePicker
                   style={{width: 200}}
                   date={this.state.date}
@@ -374,37 +387,19 @@ export class Request extends Component {
                     dateInput: {
                       marginLeft: 36,
                     },
-                    // ... You can check the source to find the other keys.
                   }}
                   onDateChange={(date) => {
                     this.setState({date: date});
                     console.warn(this.state.date);
                   }}
                 />
-                <View style={styles.SelectBloodType}>
-                  <Text>Select Blood Type</Text>
-                  <Picker
-                    selectedValue={this.state.BloodType}
-                    style={{height: 50, width: 100}}
-                    onValueChange={(itemValue, itemIndex) =>
-                      this.setState({BloodType: itemValue})
-                    }>
-                    <Picker.Item label="AB+" value="AB+" />
-                    <Picker.Item label="AB-" value="AB-" />
-                    <Picker.Item label="A+" value="A+" />
-                    <Picker.Item label="B+" value="B+" />
-                    <Picker.Item label="A-" value="A-" />
-                    <Picker.Item label="B-" value="B-" />
-                    <Picker.Item label="O-" value="O-" />
-                    <Picker.Item label="O+" value="O+" />
-                    <Picker.Item label="Other" value="Other" />
-                  </Picker>
-                </View>
+
                 <TouchableOpacity
+                  style={styles.RequestButton}
                   onPress={() => {
                     this.Notifcation();
                   }}>
-                  <Text>Request</Text>
+                  <Text style={styles.RequestText}>Request</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -534,7 +529,7 @@ const styles = StyleSheet.create({
   BloodData: {
     width: w('90%'),
     height: h('20%'),
-    backgroundColor: 'red',
+    backgroundColor: Primary,
 
     // alignItems: 'center',
     marginTop: h('1%'),
@@ -542,7 +537,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   left: {
-    backgroundColor: 'gold',
+    // backgroundColor: 'gold',
     width: '70%',
     height: '100%',
     justifyContent: 'center',
@@ -552,19 +547,19 @@ const styles = StyleSheet.create({
   },
 
   right: {
-    backgroundColor: 'orange',
+    // backgroundColor: 'orange',
     width: '30%',
     height: '100%',
     alignItems: 'center',
     justifyContent: 'center',
   },
   hospitalText: {
-    color: 'black',
+    color: 'white',
     fontSize: h('3%'),
     fontWeight: 'bold',
   },
   hospitalnumber: {
-    color: 'black',
+    color: 'white',
     fontSize: h('2%'),
   },
   ModalContainer: {
@@ -574,7 +569,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   ModalAlert: {
-    backgroundColor: 'gold',
+    backgroundColor: 'white',
     width: w('96%'),
     height: h('40%'),
     borderRadius: h('2%'),
@@ -587,7 +582,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   ModalAlertmiddle: {
-    backgroundColor: 'green',
+    // backgroundColor: 'green',
     width: '100%',
     height: '80%',
     paddingLeft: h('1.2%'),
@@ -598,7 +593,21 @@ const styles = StyleSheet.create({
     // marginTop: -h('5%'),
   },
   hospitaladdress: {
-    color: '#0006',
+    color: '#fff9',
     fontSize: h('1.8%'),
+  },
+  RequestButton: {
+    backgroundColor: Primary,
+    width: '30%',
+    height: h('6%'),
+    borderRadius: h('2%'),
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: h('6%'),
+  },
+  RequestText: {
+    color: 'white',
+    fontSize: h('2%'),
+    fontWeight: 'bold',
   },
 });

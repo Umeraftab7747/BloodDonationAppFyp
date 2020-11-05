@@ -87,7 +87,6 @@ export class Welcome extends Component {
             if (error.code === 'auth/invalid-email') {
               alert('This email address is invalid!');
             }
-            console.error(error);
           });
       } else {
         alert('Password field is empty');
@@ -123,8 +122,6 @@ export class Welcome extends Component {
               if (error.code === 'auth/invalid-email') {
                 alert('That email address is invalid!');
               }
-
-              console.error(error);
             });
         } else {
           alert('Password and Confirm Password Dont match');

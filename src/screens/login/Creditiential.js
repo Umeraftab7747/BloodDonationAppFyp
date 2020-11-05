@@ -68,7 +68,6 @@ export class Creditiential extends Component {
           password: '1234567899',
         })
         .then(() => {
-          console.warn('User added!');
           this.props.navigation.navigate('DrawerNavigator');
         });
     }
@@ -195,7 +194,6 @@ export class Creditiential extends Component {
               }}
               onDateChange={(date) => {
                 this.setState({dob: date});
-                console.warn(this.state.dob);
               }}
             />
           </View>
