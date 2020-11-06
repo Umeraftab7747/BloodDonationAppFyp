@@ -253,7 +253,12 @@ export class Welcome extends Component {
                   }}
                 />
                 <Text style={styles.or}>OR</Text>
-                <Button Text={'Enter as Guest'} />
+                <Button
+                  Text={'Enter as Guest'}
+                  onPress={() => {
+                    this.props.navigation.replace('Bottomtab2');
+                  }}
+                />
 
                 <View style={styles.SignUp}>
                   <View style={styles.leftSignup}>
