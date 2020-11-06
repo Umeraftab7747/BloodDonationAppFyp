@@ -8,6 +8,7 @@ import {Home} from '../screens/dashboard';
 import {EditProfile} from '../screens/dashboard';
 
 import {Bottomtab} from './Bottomtab';
+import {Bottomtab2} from './Bottomtab2';
 import {DrawerNavigator} from './DrawerNavigator ';
 
 export class MainNavigation extends Component {
@@ -15,6 +16,11 @@ export class MainNavigation extends Component {
     return (
       <NavigationContainer>
         <Stack.Navigator>
+          <Stack.Screen
+            name="Bottomtab2"
+            component={Bottomtab2}
+            options={{headerShown: false}}
+          />
           <Stack.Screen
             name="Welcome"
             component={Welcome}

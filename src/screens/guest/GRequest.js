@@ -21,7 +21,7 @@ import DatePicker from 'react-native-datepicker';
 import firestore from '@react-native-firebase/firestore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export class Request extends Component {
+export class GRequest extends Component {
   state = {
     Hospitals: [
       {

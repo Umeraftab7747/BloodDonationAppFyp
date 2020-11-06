@@ -60,6 +60,7 @@ export class Creditiential extends Component {
           bloodgroup: BloodType,
           cnic: Cnic,
           contact: Phone,
+          createdAt: new Date(),
           dob: dob,
           email: Email,
           ethnicity: Ethnicity,

@@ -64,7 +64,7 @@ export class Notification extends Component {
           <FlatList
             data={this.state.data}
             renderItem={({item}) => this.renderItem(item)}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item) => item.requesterID}
           />
         </View>
       </View>
