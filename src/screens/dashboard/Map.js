@@ -1,19 +1,8 @@
 import React, {Component} from 'react';
-import {
-  StyleSheet,
-  View,
-  Image,
-  Text,
-  FlatList,
-  TouchableOpacity,
-  Modal,
-} from 'react-native';
-import {Primary} from '../../color';
-import {w, h} from 'react-native-responsiveness';
-import {Icon} from 'react-native-elements';
+import {StyleSheet} from 'react-native';
 
 // Components
-import {NavHeader} from '../../components';
+
 import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
 
 export class Map extends Component {

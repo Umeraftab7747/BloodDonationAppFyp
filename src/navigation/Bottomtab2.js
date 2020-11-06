@@ -31,7 +31,7 @@ export function Bottomtab2() {
         }}
       />
       <Tab.Screen
-        name="GRequest"
+        name="Request"
         component={GRequest}
         options={{
           tabBarLabel: 'Request',
@@ -44,7 +44,7 @@ export function Bottomtab2() {
         name="GMap"
         component={GMap}
         options={{
-          tabBarLabel: 'GMap',
+          tabBarLabel: 'Map',
           tabBarIcon: ({color}) => (
             <MaterialCommunityIcons
               name="map-marker-radius"

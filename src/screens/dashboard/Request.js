@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {
   StyleSheet,
   View,
-  Image,
   Text,
   FlatList,
   TouchableOpacity,
@@ -15,7 +14,7 @@ import {Icon} from 'react-native-elements';
 
 // Components
 import {NavHeader} from '../../components';
-import CheckBox from '@react-native-community/checkbox';
+
 import {Picker} from '@react-native-picker/picker';
 import DatePicker from 'react-native-datepicker';
 import firestore from '@react-native-firebase/firestore';

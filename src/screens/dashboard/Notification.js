@@ -1,16 +1,8 @@
 import React, {Component} from 'react';
-import {
-  StyleSheet,
-  View,
-  Image,
-  Text,
-  FlatList,
-  TouchableOpacity,
-  Modal,
-} from 'react-native';
-import {Primary} from '../../color';
+import {StyleSheet, View, Text, FlatList} from 'react-native';
+
 import {w, h} from 'react-native-responsiveness';
-import {Icon} from 'react-native-elements';
+
 import firestore from '@react-native-firebase/firestore';
 
 // Components
@@ -28,13 +20,9 @@ export class Notification extends Component {
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((documentSnapshot) => {
-          // DataArray.push(documentSnapshot);
           DataArray.push(documentSnapshot.data());
           console.log(DataArray);
           this.setState({data: DataArray});
-          // this.setState({data: documentSnapshot});
-          // console.log(this.state.data.id);
-          // console.log(this.state.data.data().requestername);
         });
       });
   };

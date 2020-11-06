@@ -2,24 +2,19 @@ import React, {Component} from 'react';
 import {
   StyleSheet,
   View,
-  Image,
   Text,
   FlatList,
   TouchableOpacity,
   Modal,
-  TextInput,
 } from 'react-native';
 import {Primary} from '../../color';
 import {w, h} from 'react-native-responsiveness';
 import {Icon} from 'react-native-elements';
 
 // Components
-import {NavHeader} from '../../components';
-import CheckBox from '@react-native-community/checkbox';
+import {NavHeadGuest} from '../../components';
+
 import {Picker} from '@react-native-picker/picker';
-import DatePicker from 'react-native-datepicker';
-import firestore from '@react-native-firebase/firestore';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export class GRequest extends Component {
   state = {
@@ -156,57 +151,6 @@ export class GRequest extends Component {
     searched: '',
     BloodType: 'A+',
     modalVisible: false,
-    date: '',
-    units: '',
-    userid: '',
-    data: [],
-  };
-  // start
-
-  componentDidMount = async () => {
-    AsyncStorage.getItem('userData', (error, data) => {
-      const userData = JSON.parse(data);
-      if (userData !== null) {
-        this.setState({
-          userid: userData.id,
-        });
-        this.userinfo();
-      } else {
-        console.warn('No data found');
-      }
-    });
-  };
-
-  userinfo = async () => {
-    const user = await firestore()
-      .collection('clientsdata')
-      .doc(this.state.userid)
-      .get();
-    this.setState({data: user.data()});
-  };
-
-  // end
-
-  Notifcation = () => {
-    const {BloodType, units, date} = this.state;
-    if (BloodType === '' || units === '' || date === '') {
-      alert('ALL FIELDS ARE REQUIRED TO MAKE A REQUEST');
-    } else {
-      firestore()
-        .collection('bloodreq')
-        .add({
-          bloodgroup: BloodType,
-          cnic: this.state.data.cnic,
-          name: this.state.data.name,
-          needdate: date,
-          status: 'null',
-          timee: new Date(),
-          units: units,
-        })
-        .then(() => {
-          console.warn('User added!');
-        });
-    }
   };
 
   renderitem = (item) => (
@@ -251,7 +195,7 @@ export class GRequest extends Component {
   render() {
     return (
       <View style={styles.Container}>
-        <NavHeader
+        <NavHeadGuest
           txt="Request"
           onPress={() => {
             this.props.navigation.openDrawer();
@@ -300,10 +244,10 @@ export class GRequest extends Component {
 
               {/* Checkbox 2 */}
               <TouchableOpacity
-                style={styles.CheckBoxContainer}
+                style={[styles.CheckBoxContainer]}
                 onPress={() => {
                   this.setState({checked1: !this.state.checked1}, () => {
-                    this.setState({searched: 'Advance', checked: false});
+                    this.setState({modalVisible: true, checked: false});
                   });
                 }}>
                 {this.state.checked1 ? (
@@ -311,26 +255,12 @@ export class GRequest extends Component {
                 ) : (
                   <View style={styles.CheckBox} />
                 )}
-                <Text>Advance</Text>
+                <Text style={styles.disableColor}>Advance</Text>
               </TouchableOpacity>
               {/* end CheckBox */}
             </View>
-            <View style={styles.Quantity}>
-              <Text>Quantity</Text>
-              <TextInput
-                style={styles.QuantityTextField}
-                placeholder={'4 packets'}
-                onChangeText={(units) => {
-                  this.setState({units});
-                }}
-              />
-            </View>
           </View>
-          <View style={styles.BottomBox}>
-            <TouchableOpacity style={styles.SearchButton}>
-              <Text>Search</Text>
-            </TouchableOpacity>
-          </View>
+          <View style={styles.BottomBox}></View>
         </View>
         {/* DATA BANK */}
 
@@ -368,38 +298,14 @@ export class GRequest extends Component {
               </View>
 
               <View style={styles.ModalAlertmiddle}>
-                <DatePicker
-                  style={{width: 200}}
-                  date={this.state.date}
-                  mode="date"
-                  placeholder="select date"
-                  format="YYYY-MM-DD"
-                  confirmBtnText="Confirm"
-                  cancelBtnText="Cancel"
-                  androidMode={'spinner'}
-                  customStyles={{
-                    dateIcon: {
-                      position: 'absolute',
-                      left: 0,
-                      top: 4,
-                      marginLeft: 0,
-                    },
-                    dateInput: {
-                      marginLeft: 36,
-                    },
-                  }}
-                  onDateChange={(date) => {
-                    this.setState({date: date});
-                    console.warn(this.state.date);
-                  }}
-                />
-
+                <Text style={styles.KindlySignup}>
+                  KINDLY SIGNUP TO USE THIS FEATURE!
+                </Text>
                 <TouchableOpacity
-                  style={styles.RequestButton}
                   onPress={() => {
-                    this.Notifcation();
+                    this.props.navigation.replace('Welcome');
                   }}>
-                  <Text style={styles.RequestText}>Request</Text>
+                  <Text style={styles.Signup}>SIGNUP</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -421,7 +327,7 @@ const styles = StyleSheet.create({
   SearchBox: {
     backgroundColor: Primary,
     width: w('90%'),
-    height: h('25%'),
+    height: h('18%'),
     alignItems: 'center',
     marginTop: h('1%'),
     borderRadius: h('1%'),
@@ -455,7 +361,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     width: '100%',
-    height: h('4%'),
+    height: h('8%'),
     // backgroundColor: 'red',
     alignItems: 'center',
   },
@@ -609,5 +515,16 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: h('2%'),
     fontWeight: 'bold',
+  },
+  disableColor: {
+    color: 'silver',
+  },
+  KindlySignup: {
+    color: 'black',
+    fontSize: h('2%'),
+  },
+  Signup: {
+    color: Primary,
+    fontSize: h('2.5%'),
   },
 });

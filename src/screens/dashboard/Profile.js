@@ -1,16 +1,7 @@
 import React, {Component} from 'react';
-import {
-  StyleSheet,
-  View,
-  Image,
-  Text,
-  FlatList,
-  TouchableOpacity,
-  Modal,
-} from 'react-native';
-import {Primary} from '../../color';
+import {StyleSheet, View, Image, Text} from 'react-native';
+
 import {w, h} from 'react-native-responsiveness';
-import {Icon} from 'react-native-elements';
 
 // Components
 import {NavHeader} from '../../components';
