@@ -7,6 +7,7 @@ import firestore from '@react-native-firebase/firestore';
 
 // Components
 import {NavHeader} from '../../components';
+import {Primary} from '../../color';
 
 export class Notification extends Component {
   state = {data: []};
@@ -30,11 +31,11 @@ export class Notification extends Component {
   renderItem = (item) => (
     <View style={styles.FlatListView}>
       <View style={styles.leftFlat}>
-        <Text>Request: {item.requestedblood}</Text>
-        <Text>Units: {item.requestedunits}</Text>
+        <Text style={styles.textColor}>Request: {item.requestedblood}</Text>
+        <Text style={styles.textColor}>Units: {item.requestedunits}</Text>
       </View>
       <View style={styles.RightFlat}>
-        <Text>Hospital {item.content}</Text>
+        <Text style={styles.textColor}>Hospital {item.content}</Text>
       </View>
     </View>
   );
@@ -68,16 +69,17 @@ const styles = StyleSheet.create({
   },
   FlatListContianer: {
     // backgroundColor: 'red',
-    width: '90%',
+    width: '95%',
     height: h('90%'),
     alignItems: 'center',
   },
   FlatListView: {
-    backgroundColor: 'gold',
+    backgroundColor: Primary,
     width: w('90%'),
     height: h('10%'),
     margin: h('1%'),
     flexDirection: 'row',
+    borderRadius: h('1%'),
   },
   leftFlat: {
     // backgroundColor: 'red',
@@ -88,9 +90,12 @@ const styles = StyleSheet.create({
   },
   RightFlat: {
     // backgroundColor: 'green',
-    width: '70%',
+    width: '66%',
     height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  textColor: {
+    color: 'white',
   },
 });

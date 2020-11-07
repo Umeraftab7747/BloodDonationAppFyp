@@ -14,9 +14,52 @@ import {Icon} from 'react-native-elements';
 
 // Components
 import {NavHeader} from '../../components';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import firestore from '@react-native-firebase/firestore';
 
+let DataAraay = [];
 export class Records extends Component {
-  state = {};
+  state = {userid: '', data: []};
+  componentDidMount = async () => {
+    AsyncStorage.getItem('userData', (error, data) => {
+      const userData = JSON.parse(data);
+      if (userData !== null) {
+        this.setState({
+          userid: userData.id,
+        });
+        this.userinfo();
+      } else {
+        console.warn('No data found');
+      }
+    });
+  };
+
+  userinfo = async () => {
+    firestore()
+      .collection('clientshistory')
+      .where('donorid', '==', this.state.userid)
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((documentSnapshot) => {
+          DataAraay.push(documentSnapshot.data());
+          this.setState({data: DataAraay});
+          console.log(this.state.data);
+        });
+      });
+  };
+
+  renderItem = (item) => (
+    <View style={styles.FlatListView}>
+      <View style={styles.leftFlat}>
+        <Text style={styles.textColor}>Donated To: {item.hospital}</Text>
+      </View>
+      <View style={styles.RightFlat}>
+        <Text style={styles.textColor}>
+          Time: {item.createdAt.toDate().toDateString()}
+        </Text>
+      </View>
+    </View>
+  );
 
   render() {
     return (
@@ -27,6 +70,14 @@ export class Records extends Component {
             this.props.navigation.openDrawer();
           }}
         />
+
+        <View style={styles.FlatListContianer}>
+          <FlatList
+            data={this.state.data}
+            renderItem={({item}) => this.renderItem(item)}
+            keyExtractor={(item) => item.requesterID}
+          />
+        </View>
       </View>
     );
   }
@@ -36,5 +87,38 @@ const styles = StyleSheet.create({
   Container: {
     flex: 1,
     // backgroundColor: Primary,
+    alignItems: 'center',
+  },
+  FlatListContianer: {
+    // backgroundColor: 'red',
+    width: '95%',
+    height: h('90%'),
+    alignItems: 'center',
+  },
+  FlatListView: {
+    backgroundColor: Primary,
+    width: w('90%'),
+    height: h('10%'),
+    margin: h('1%'),
+    flexDirection: 'row',
+    borderRadius: h('1%'),
+  },
+  leftFlat: {
+    // backgroundColor: 'red',
+    width: '45%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  RightFlat: {
+    // backgroundColor: 'green',
+    width: '55%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  textColor: {
+    color: 'white',
+    marginLeft: h('1%'),
   },
 });

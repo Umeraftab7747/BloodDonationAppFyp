@@ -36,8 +36,6 @@ export class Welcome extends Component {
     setTimeout(() => {
       this.startAnimation();
     }, 100);
-
-    // this.UserSignUp();
   };
 
   Login = async () => {
@@ -61,7 +59,6 @@ export class Welcome extends Component {
                       'userData',
                       JSON.stringify(values),
                       () => {
-                        console.warn(values);
                         if (documentSnapshot.exists) {
                           this.props.navigation.replace('DrawerNavigator');
                         } else {
