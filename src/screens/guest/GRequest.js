@@ -151,23 +151,24 @@ export class GRequest extends Component {
     searched: '',
     BloodType: 'A+',
     modalVisible: false,
+    selectedData: '',
   };
 
   renderitem = (item) => (
     <>
-      {this.state.searched === '' ? null : (
+      {this.state.searched === 'Emergency' ? null : (
         <View style={styles.BloodData}>
           <View style={styles.left}>
             <Text style={styles.hospitalText}>{item.name}</Text>
-            <Text style={styles.hospitalnumber}>{item.number}</Text>
-            <Text style={styles.hospitaladdress}>{item.address}</Text>
           </View>
 
           <View style={styles.right}>
             {this.state.searched === 'Advance' ? (
               <TouchableOpacity
                 onPress={() => {
-                  this.setState({modalVisible: true});
+                  this.setState({selectedData: item}, () => {
+                    this.setState({modalVisible: true});
+                  });
                 }}>
                 <Icon name={'heart'} type="ionicon" color={'#ffff'} size={35} />
               </TouchableOpacity>
@@ -176,7 +177,9 @@ export class GRequest extends Component {
             {this.state.searched === 'Emergency' ? (
               <TouchableOpacity
                 onPress={() => {
-                  this.setState({modalVisible: true});
+                  this.setState({selectedData: item}, () => {
+                    this.setState({modalVisible: true});
+                  });
                 }}>
                 <Icon
                   name={'arrow-forward-circle'}
@@ -231,7 +234,7 @@ export class GRequest extends Component {
                 style={styles.CheckBoxContainer}
                 onPress={() => {
                   this.setState({checked: !this.state.checked}, () => {
-                    this.setState({searched: 'Emergency', checked1: false});
+                    this.setState({searched: 'Advance', checked1: false});
                   });
                 }}>
                 {this.state.checked ? (
@@ -247,7 +250,11 @@ export class GRequest extends Component {
                 style={[styles.CheckBoxContainer]}
                 onPress={() => {
                   this.setState({checked1: !this.state.checked1}, () => {
-                    this.setState({modalVisible: true, checked: false});
+                    this.setState({
+                      searched: 'Emergency',
+                      checked: false,
+                      modalVisible: true,
+                    });
                   });
                 }}>
                 {this.state.checked1 ? (
@@ -266,51 +273,94 @@ export class GRequest extends Component {
 
         <FlatList
           data={this.state.Hospitals}
-          renderItem={({item}) => this.renderitem(item)}
+          renderItem={({item}) =>
+            this.state.searched === 'Advance' ? this.renderitem(item) : null
+          }
           keyExtractor={(item) => item.key}
         />
 
         {/* end of blood bank */}
         {/* start of modal */}
 
-        <Modal
-          animationType="fade"
-          transparent={true}
-          visible={this.state.modalVisible}
-          onRequestClose={() => {
-            this.setState({modalVisible: false});
-          }}>
-          <View style={styles.ModalContainer}>
-            <View style={styles.ModalAlert}>
-              <View style={styles.ModalAlerttop}>
-                <TouchableOpacity
-                  delayPressIn={0}
-                  onPress={() => {
-                    this.setState({modalVisible: false});
-                  }}>
-                  <Icon
-                    name={'close-circle-outline'}
-                    type="ionicon"
-                    color={Primary}
-                    size={35}
-                  />
-                </TouchableOpacity>
-              </View>
+        {this.state.searched === 'Emergency' ? (
+          <Modal
+            animationType="fade"
+            transparent={true}
+            visible={this.state.modalVisible}
+            onRequestClose={() => {
+              this.setState({modalVisible: false});
+            }}>
+            <View style={styles.ModalContainer}>
+              <View style={styles.ModalAlert}>
+                <View style={styles.ModalAlerttop}>
+                  <TouchableOpacity
+                    delayPressIn={0}
+                    onPress={() => {
+                      this.setState({modalVisible: false});
+                    }}>
+                    <Icon
+                      name={'close-circle-outline'}
+                      type="ionicon"
+                      color={Primary}
+                      size={35}
+                    />
+                  </TouchableOpacity>
+                </View>
 
-              <View style={styles.ModalAlertmiddle}>
-                <Text style={styles.KindlySignup}>
-                  KINDLY SIGNUP TO USE THIS FEATURE!
-                </Text>
-                <TouchableOpacity
-                  onPress={() => {
-                    this.props.navigation.replace('Welcome');
-                  }}>
-                  <Text style={styles.Signup}>SIGNUP</Text>
-                </TouchableOpacity>
+                <View style={styles.ModalAlertmiddle}>
+                  <Text style={styles.KindlySignup}>
+                    KINDLY SIGNUP TO USE THIS FEATURE!
+                  </Text>
+                  <TouchableOpacity
+                    onPress={() => {
+                      this.props.navigation.replace('Welcome');
+                    }}>
+                    <Text style={styles.Signup}>SIGNUP</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
-          </View>
-        </Modal>
+          </Modal>
+        ) : (
+          <Modal
+            animationType="fade"
+            transparent={true}
+            visible={this.state.modalVisible}
+            onRequestClose={() => {
+              this.setState({modalVisible: false});
+            }}>
+            <View style={styles.ModalContainer}>
+              <View style={styles.ModalAlert}>
+                <View style={styles.ModalAlerttop}>
+                  <TouchableOpacity
+                    delayPressIn={0}
+                    onPress={() => {
+                      this.setState({modalVisible: false});
+                    }}>
+                    <Icon
+                      name={'close-circle-outline'}
+                      type="ionicon"
+                      color={Primary}
+                      size={35}
+                    />
+                  </TouchableOpacity>
+                </View>
+
+                <View style={styles.ModalAlertmiddle}>
+                  <Text style={styles.DataTime1}>
+                    Name: {this.state.selectedData.name}
+                  </Text>
+                  <Text style={styles.DataTime2}>
+                    Address: {this.state.selectedData.address}
+                  </Text>
+                  <Text style={styles.DataTime3}>
+                    Number: {this.state.selectedData.number}
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </Modal>
+        )}
 
         {/* End of modal */}
       </View>
@@ -526,5 +576,20 @@ const styles = StyleSheet.create({
   Signup: {
     color: Primary,
     fontSize: h('2.5%'),
+  },
+  DataTime1: {
+    color: Primary,
+    fontSize: h('3%'),
+    fontWeight: 'bold',
+  },
+  DataTime2: {
+    color: '#0005',
+    fontSize: h('2.5%'),
+    fontWeight: 'bold',
+  },
+  DataTime3: {
+    color: Primary,
+    fontSize: h('2.5%'),
+    fontWeight: 'bold',
   },
 });

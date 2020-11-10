@@ -34,8 +34,21 @@ export class Welcome extends Component {
 
   componentDidMount = () => {
     setTimeout(() => {
-      this.startAnimation();
+      this.retrieveUser();
     }, 100);
+  };
+
+  retrieveUser = () => {
+    AsyncStorage.getItem('userData', (error, data) => {
+      const userData = JSON.parse(data);
+      if (userData !== null) {
+        // We have data!!
+
+        this.props.navigation.replace('DrawerNavigator');
+      } else {
+        this.startAnimation();
+      }
+    });
   };
 
   Login = async () => {

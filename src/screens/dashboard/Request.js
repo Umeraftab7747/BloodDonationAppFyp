@@ -159,6 +159,7 @@ export class Request extends Component {
     units: '',
     userid: '',
     data: [],
+    selectedData: '',
   };
   // start
 
@@ -201,6 +202,7 @@ export class Request extends Component {
           status: 'null',
           timee: new Date(),
           units: units,
+          selectedData: '',
         })
         .then(() => {
           console.warn('User added!');
@@ -214,8 +216,13 @@ export class Request extends Component {
         <View style={styles.BloodData}>
           <View style={styles.left}>
             <Text style={styles.hospitalText}>{item.name}</Text>
-            <Text style={styles.hospitalnumber}>{item.number}</Text>
-            <Text style={styles.hospitaladdress}>{item.address}</Text>
+
+            {this.state.searched === 'Advance' ? (
+              <>
+                <Text style={styles.hospitalnumber}>{item.number}</Text>
+                <Text style={styles.hospitaladdress}>{item.address}</Text>
+              </>
+            ) : null}
           </View>
 
           <View style={styles.right}>
@@ -231,7 +238,9 @@ export class Request extends Component {
             {this.state.searched === 'Emergency' ? (
               <TouchableOpacity
                 onPress={() => {
-                  this.setState({modalVisible: true});
+                  this.setState({selectedData: item}, () => {
+                    this.setState({modalVisible: true});
+                  });
                 }}>
                 <Icon
                   name={'arrow-forward-circle'}
@@ -280,7 +289,7 @@ export class Request extends Component {
                 <Picker.Item label="Other" value="Other" />
               </Picker>
             </View>
-            <View style={styles.CheckBoxed}>
+            <View style={[styles.CheckBoxed, {marginTop: h('2%')}]}>
               {/* checkbox */}
               <TouchableOpacity
                 style={styles.CheckBoxContainer}
@@ -314,7 +323,7 @@ export class Request extends Component {
               </TouchableOpacity>
               {/* end CheckBox */}
             </View>
-            <View style={styles.Quantity}>
+            <View style={[styles.Quantity, {marginTop: h('3%')}]}>
               <Text>Quantity</Text>
               <TextInput
                 style={styles.QuantityTextField}
@@ -324,11 +333,6 @@ export class Request extends Component {
                 }}
               />
             </View>
-          </View>
-          <View style={styles.BottomBox}>
-            <TouchableOpacity style={styles.SearchButton}>
-              <Text>Search</Text>
-            </TouchableOpacity>
           </View>
         </View>
         {/* DATA BANK */}
@@ -342,68 +346,109 @@ export class Request extends Component {
         {/* end of blood bank */}
         {/* start of modal */}
 
-        <Modal
-          animationType="fade"
-          transparent={true}
-          visible={this.state.modalVisible}
-          onRequestClose={() => {
-            this.setState({modalVisible: false});
-          }}>
-          <View style={styles.ModalContainer}>
-            <View style={styles.ModalAlert}>
-              <View style={styles.ModalAlerttop}>
-                <TouchableOpacity
-                  delayPressIn={0}
-                  onPress={() => {
-                    this.setState({modalVisible: false});
-                  }}>
-                  <Icon
-                    name={'close-circle-outline'}
-                    type="ionicon"
-                    color={Primary}
-                    size={35}
+        {this.state.searched === 'Advance' ? (
+          <Modal
+            animationType="fade"
+            transparent={true}
+            visible={this.state.modalVisible}
+            onRequestClose={() => {
+              this.setState({modalVisible: false});
+            }}>
+            <View style={styles.ModalContainer}>
+              <View style={styles.ModalAlert}>
+                <View style={styles.ModalAlerttop}>
+                  <TouchableOpacity
+                    delayPressIn={0}
+                    onPress={() => {
+                      this.setState({modalVisible: false});
+                    }}>
+                    <Icon
+                      name={'close-circle-outline'}
+                      type="ionicon"
+                      color={Primary}
+                      size={35}
+                    />
+                  </TouchableOpacity>
+                </View>
+
+                <View style={styles.ModalAlertmiddle}>
+                  <DatePicker
+                    style={{width: 200}}
+                    date={this.state.date}
+                    mode="date"
+                    placeholder="select date"
+                    format="YYYY-MM-DD"
+                    confirmBtnText="Confirm"
+                    cancelBtnText="Cancel"
+                    androidMode={'spinner'}
+                    customStyles={{
+                      dateIcon: {
+                        position: 'absolute',
+                        left: 0,
+                        top: 4,
+                        marginLeft: 0,
+                      },
+                      dateInput: {
+                        marginLeft: 36,
+                      },
+                    }}
+                    onDateChange={(date) => {
+                      this.setState({date: date});
+                      console.warn(this.state.date);
+                    }}
                   />
-                </TouchableOpacity>
-              </View>
 
-              <View style={styles.ModalAlertmiddle}>
-                <DatePicker
-                  style={{width: 200}}
-                  date={this.state.date}
-                  mode="date"
-                  placeholder="select date"
-                  format="YYYY-MM-DD"
-                  confirmBtnText="Confirm"
-                  cancelBtnText="Cancel"
-                  androidMode={'spinner'}
-                  customStyles={{
-                    dateIcon: {
-                      position: 'absolute',
-                      left: 0,
-                      top: 4,
-                      marginLeft: 0,
-                    },
-                    dateInput: {
-                      marginLeft: 36,
-                    },
-                  }}
-                  onDateChange={(date) => {
-                    this.setState({date: date});
-                    console.warn(this.state.date);
-                  }}
-                />
-
-                <TouchableOpacity
-                  style={styles.RequestButton}
-                  onPress={() => {
-                    this.Notifcation();
-                  }}>
-                  <Text style={styles.RequestText}>Request</Text>
-                </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.RequestButton}
+                    onPress={() => {
+                      this.Notifcation();
+                    }}>
+                    <Text style={styles.RequestText}>Request</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
-          </View>
-        </Modal>
+          </Modal>
+        ) : (
+          <Modal
+            animationType="fade"
+            transparent={true}
+            visible={this.state.modalVisible}
+            onRequestClose={() => {
+              this.setState({modalVisible: false});
+            }}>
+            <View style={styles.ModalContainer}>
+              <View style={styles.ModalAlert}>
+                <View style={styles.ModalAlerttop}>
+                  <TouchableOpacity
+                    delayPressIn={0}
+                    onPress={() => {
+                      this.setState({modalVisible: false});
+                    }}>
+                    <Icon
+                      name={'close-circle-outline'}
+                      type="ionicon"
+                      color={Primary}
+                      size={35}
+                    />
+                  </TouchableOpacity>
+                </View>
+
+                <View style={styles.ModalAlertmiddle}>
+                  <Text style={styles.DataTime1}>
+                    Name: {this.state.selectedData.name}
+                  </Text>
+                  <Text style={styles.DataTime2}>
+                    Address: {this.state.selectedData.address}
+                  </Text>
+                  <Text style={styles.DataTime3}>
+                    Number: {this.state.selectedData.number}
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </Modal>
+        )}
 
         {/* End of modal */}
       </View>
@@ -584,8 +629,8 @@ const styles = StyleSheet.create({
     // backgroundColor: 'green',
     width: '100%',
     height: '80%',
-    paddingLeft: h('1.2%'),
-    paddingRight: h('1.2%'),
+    paddingLeft: h('3%'),
+    paddingRight: h('3%'),
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: h('2%'),
@@ -607,6 +652,21 @@ const styles = StyleSheet.create({
   RequestText: {
     color: 'white',
     fontSize: h('2%'),
+    fontWeight: 'bold',
+  },
+  DataTime1: {
+    color: Primary,
+    fontSize: h('3%'),
+    fontWeight: 'bold',
+  },
+  DataTime2: {
+    color: '#0005',
+    fontSize: h('2.5%'),
+    fontWeight: 'bold',
+  },
+  DataTime3: {
+    color: Primary,
+    fontSize: h('2.5%'),
     fontWeight: 'bold',
   },
 });

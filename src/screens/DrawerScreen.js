@@ -25,6 +25,11 @@ export class DrawerScreen extends Component {
     });
   };
 
+  removeData = () => {
+    AsyncStorage.removeItem('userData', () => {
+      this.props.navigation.replace('Welcome');
+    });
+  };
   userinfo = async () => {
     const user = await firestore()
       .collection('clientsdata')
@@ -109,6 +114,9 @@ export class DrawerScreen extends Component {
           </View>
         </TouchableOpacity>
         <TouchableOpacity
+          onPress={() => {
+            this.removeData();
+          }}
           style={[
             styles.ItemView,
             {
