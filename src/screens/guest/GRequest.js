@@ -213,19 +213,31 @@ export class GRequest extends Component {
               <Text>Select Blood Type</Text>
               <Picker
                 selectedValue={this.state.BloodType}
-                style={{height: 50, width: 100}}
+                style={{height: 50, width: 150}}
                 onValueChange={(itemValue, itemIndex) =>
                   this.setState({BloodType: itemValue})
                 }>
-                <Picker.Item label="AB+" value="AB+" />
-                <Picker.Item label="AB-" value="AB-" />
-                <Picker.Item label="A+" value="A+" />
-                <Picker.Item label="B+" value="B+" />
-                <Picker.Item label="A-" value="A-" />
-                <Picker.Item label="B-" value="B-" />
-                <Picker.Item label="O-" value="O-" />
-                <Picker.Item label="O+" value="O+" />
-                <Picker.Item label="Other" value="Other" />
+                <Picker.Item label="RBC AB+" value="RBC AB+" />
+                <Picker.Item label="RBC AB-" value="RBCABn" />
+                <Picker.Item label="RBC A+" value="RBC A+" />
+                <Picker.Item label="RBC B+" value="RBC B+" />
+                <Picker.Item label="RBC A-" value="RBC A-" />
+                <Picker.Item label="RBC B-" value="RBC B-" />
+                <Picker.Item label="RBC O-" value="RBC O-" />
+                <Picker.Item label="RBC O+" value="RBCOp" />
+                <Picker.Item label="WBC AB+" value="WBC AB+" />
+                <Picker.Item label="WBC AB-" value="WBC AB-" />
+                <Picker.Item label="WBC A+" value="WBC A+" />
+                <Picker.Item label="WBC B+" value="WBC B+" />
+                <Picker.Item label="WBC A-" value="WBC A-" />
+                <Picker.Item label="WBC B-" value="WBC B-" />
+                <Picker.Item label="WBC O-" value="WBC O-" />
+                <Picker.Item label="WBC O+" value="WBC O+" />
+                <Picker.Item label="Platelets" value="Platelets" />
+                <Picker.Item label="Plasma" value="Plasma" />
+                <Picker.Item label="Cryo" value="Cryo" />
+                <Picker.Item label="WBC Other" value="WBC Other" />
+                <Picker.Item label="RBC Other" value="RBC Other" />
               </Picker>
             </View>
             <View style={styles.CheckBoxed}>

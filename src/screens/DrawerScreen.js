@@ -100,7 +100,11 @@ export class DrawerScreen extends Component {
             <Text style={styles.txt}>Records</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.ItemView}>
+        <TouchableOpacity
+          onPress={() => {
+            this.props.navigation.navigate('About');
+          }}
+          style={styles.ItemView}>
           <View style={styles.iconContainer}>
             <Icon
               name={'information-circle'}

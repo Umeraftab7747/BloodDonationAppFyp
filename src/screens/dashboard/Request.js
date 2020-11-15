@@ -160,10 +160,14 @@ export class Request extends Component {
     userid: '',
     data: [],
     selectedData: '',
+    Hospitals2: [],
+    Hospitals3: [],
+    filteredData: [],
   };
   // start
 
   componentDidMount = async () => {
+    this.Database();
     AsyncStorage.getItem('userData', (error, data) => {
       const userData = JSON.parse(data);
       if (userData !== null) {
@@ -183,6 +187,20 @@ export class Request extends Component {
       .doc(this.state.userid)
       .get();
     this.setState({data: user.data()});
+    // console.warn(this.state.data);
+  };
+
+  Database = async () => {
+    let hospitalData = [];
+    firestore()
+      .collection('stocks')
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((documentSnapshot) => {
+          hospitalData.push(documentSnapshot.data());
+          this.setState({Hospitals2: hospitalData});
+        });
+      });
   };
 
   // end
@@ -202,7 +220,7 @@ export class Request extends Component {
           status: 'null',
           timee: new Date(),
           units: units,
-          selectedData: '',
+          Reqhospital: this.state.selectedData.hospitalf,
         })
         .then(() => {
           console.warn('User added!');
@@ -210,17 +228,27 @@ export class Request extends Component {
     }
   };
 
+  // searching = (text) => {
+  //   firestore()
+  //     .collection('stocks')
+  //     .orderBy('Plasma')
+  //     .startAt(text)
+  //     .endAt(text + 2)
+  //     .get()
+  //     .then((querySnapshot) => {});
+  // };
+
   renderitem = (item) => (
     <>
       {this.state.searched === '' ? null : (
         <View style={styles.BloodData}>
           <View style={styles.left}>
-            <Text style={styles.hospitalText}>{item.name}</Text>
+            <Text style={styles.hospitalText}>{item.hospital}</Text>
 
             {this.state.searched === 'Advance' ? (
               <>
-                <Text style={styles.hospitalnumber}>{item.number}</Text>
-                <Text style={styles.hospitaladdress}>{item.address}</Text>
+                <Text style={styles.hospitalnumber}>{item.phone}</Text>
+                <Text style={styles.hospitaladdress}>{item.Address}</Text>
               </>
             ) : null}
           </View>
@@ -229,7 +257,9 @@ export class Request extends Component {
             {this.state.searched === 'Advance' ? (
               <TouchableOpacity
                 onPress={() => {
-                  this.setState({modalVisible: true});
+                  this.setState({selectedData: item}, () => {
+                    this.setState({modalVisible: true});
+                  });
                 }}>
                 <Icon name={'heart'} type="ionicon" color={'#ffff'} size={35} />
               </TouchableOpacity>
@@ -274,19 +304,33 @@ export class Request extends Component {
               <Text>Select Blood Type</Text>
               <Picker
                 selectedValue={this.state.BloodType}
-                style={{height: 50, width: 100}}
+                style={{height: 50, width: 140}}
                 onValueChange={(itemValue, itemIndex) =>
-                  this.setState({BloodType: itemValue})
+                  this.setState({BloodType: itemValue}, () => {
+                    console.warn(this.state.BloodType);
+                  })
                 }>
-                <Picker.Item label="AB+" value="AB+" />
-                <Picker.Item label="AB-" value="AB-" />
-                <Picker.Item label="A+" value="A+" />
-                <Picker.Item label="B+" value="B+" />
-                <Picker.Item label="A-" value="A-" />
-                <Picker.Item label="B-" value="B-" />
-                <Picker.Item label="O-" value="O-" />
-                <Picker.Item label="O+" value="O+" />
-                <Picker.Item label="Other" value="Other" />
+                <Picker.Item label="RBC AB+" value="RBCABp" />
+                <Picker.Item label="RBC AB-" value="RBCABn" />
+                <Picker.Item label="RBC A+" value="RBCAp" />
+                <Picker.Item label="RBC B+" value="RBCBp" />
+                <Picker.Item label="RBC A-" value="RBCAn" />
+                <Picker.Item label="RBC B-" value="RBCBN" />
+                <Picker.Item label="RBC O-" value="RBCOn" />
+                <Picker.Item label="RBC O+" value="RBCOp" />
+                <Picker.Item label="WBC AB+" value="WBCABp" />
+                <Picker.Item label="WBC AB-" value="WBCABn" />
+                <Picker.Item label="WBC A+" value="WBCAp" />
+                <Picker.Item label="WBC B+" value="WBCBp" />
+                <Picker.Item label="WBC A-" value="WBCAn" />
+                <Picker.Item label="WBC B-" value="WBCBn" />
+                <Picker.Item label="WBC O-" value="WBCOn" />
+                <Picker.Item label="WBC O+" value="WBCOp" />
+                <Picker.Item label="Platelet" value="Platelet" />
+                <Picker.Item label="Plasma" value="Plasma" />
+                <Picker.Item label="Cryo" value="Cryo" />
+                <Picker.Item label="WBC Other" value="WBCOther" />
+                <Picker.Item label="RBC Other" value="RBCOther" />
               </Picker>
             </View>
             <View style={[styles.CheckBoxed, {marginTop: h('2%')}]}>
@@ -325,10 +369,12 @@ export class Request extends Component {
             </View>
             <View style={[styles.Quantity, {marginTop: h('3%')}]}>
               <Text>Quantity</Text>
+              {/* Search */}
               <TextInput
                 style={styles.QuantityTextField}
                 placeholder={'4 packets'}
                 onChangeText={(units) => {
+                  // this.searching(units);
                   this.setState({units});
                 }}
               />
@@ -338,7 +384,7 @@ export class Request extends Component {
         {/* DATA BANK */}
 
         <FlatList
-          data={this.state.Hospitals}
+          data={this.state.Hospitals2}
           renderItem={({item}) => this.renderitem(item)}
           keyExtractor={(item) => item.key}
         />
@@ -372,6 +418,9 @@ export class Request extends Component {
                 </View>
 
                 <View style={styles.ModalAlertmiddle}>
+                  <Text style={styles.DataTime1}>
+                    Name: {this.state.selectedData.hospital}
+                  </Text>
                   <DatePicker
                     style={{width: 200}}
                     date={this.state.date}
@@ -436,13 +485,13 @@ export class Request extends Component {
 
                 <View style={styles.ModalAlertmiddle}>
                   <Text style={styles.DataTime1}>
-                    Name: {this.state.selectedData.name}
+                    Name: {this.state.selectedData.hospital}
                   </Text>
                   <Text style={styles.DataTime2}>
-                    Address: {this.state.selectedData.address}
+                    Address: {this.state.selectedData.Address}
                   </Text>
                   <Text style={styles.DataTime3}>
-                    Number: {this.state.selectedData.number}
+                    Number: {this.state.selectedData.phone}
                   </Text>
                 </View>
               </View>

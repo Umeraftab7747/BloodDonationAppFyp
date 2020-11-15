@@ -6,9 +6,11 @@ import {
   Text,
   Animated,
   TouchableOpacity,
+  Modal,
 } from 'react-native';
 import {Primary} from '../../color';
 import {w, h} from 'react-native-responsiveness';
+import {Icon} from 'react-native-elements';
 
 // Components
 import {Textinput, Button} from '../../components';
@@ -30,6 +32,8 @@ export class Welcome extends Component {
     SignupEmail: '',
     SignupPassword: '',
     SignupConfirmPassword: '',
+    modalVisible: false,
+    ForgotPass: '',
   };
 
   componentDidMount = () => {
@@ -144,6 +148,21 @@ export class Welcome extends Component {
     }
   };
 
+  forgotPassword = () => {
+    if (this.state.ForgotPass !== '') {
+      auth()
+        .sendPasswordResetEmail(this.state.ForgotPass)
+        .then(function (user) {
+          alert('Please check your email...');
+        })
+        .catch(function (e) {
+          console.log(e);
+        });
+    } else {
+      alert('Email field is Empty');
+    }
+  };
+
   startAnimation = () => {
     Animated.timing(this.state.logoAnimation, {
       toValue: -220,
@@ -251,7 +270,11 @@ export class Welcome extends Component {
                       this.setState({Password});
                     }}
                   />
-                  <TouchableOpacity style={styles.ForgotPass}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      this.setState({modalVisible: true});
+                    }}
+                    style={styles.ForgotPass}>
                     <Text style={styles.ForgotPassText}>FORGOT PASSWORD !</Text>
                   </TouchableOpacity>
                 </View>
@@ -333,6 +356,53 @@ export class Welcome extends Component {
             )}
           </Animated.View>
         </View>
+        {/* MODAL */}
+
+        <Modal
+          animationType="fade"
+          transparent={true}
+          visible={this.state.modalVisible}
+          onRequestClose={() => {
+            this.setState({modalVisible: false});
+          }}>
+          <View style={styles.ModalContainer}>
+            <View style={styles.ModalAlert}>
+              <View style={styles.ModalAlerttop}>
+                <TouchableOpacity
+                  delayPressIn={0}
+                  onPress={() => {
+                    this.setState({modalVisible: false});
+                  }}>
+                  <Icon
+                    name={'close-circle-outline'}
+                    type="ionicon"
+                    color={Primary}
+                    size={35}
+                  />
+                </TouchableOpacity>
+              </View>
+
+              <View style={styles.ModalAlertmiddle}>
+                <Textinput
+                  name={'mail'}
+                  placeholder={'Email'}
+                  onChangeText={(ForgotPass) => {
+                    this.setState({ForgotPass});
+                  }}
+                />
+                <TouchableOpacity
+                  style={styles.RequestButton}
+                  onPress={() => {
+                    this.forgotPassword();
+                  }}>
+                  <Text style={styles.RequestText}>Rest</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </Modal>
+
+        {/* MODAL END */}
       </KeyboardAwareScrollView>
     );
   }
@@ -450,5 +520,49 @@ const styles = StyleSheet.create({
   topSpace: {
     width: '100%',
     height: h('10%'),
+  },
+  ModalContainer: {
+    backgroundColor: '#0004',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  ModalAlert: {
+    backgroundColor: 'white',
+    width: w('96%'),
+    height: h('40%'),
+    borderRadius: h('2%'),
+  },
+  ModalAlerttop: {
+    // backgroundColor: 'gold',
+    width: '100%',
+    height: '15%',
+    // justifyContent: 'flex-end',
+    alignItems: 'flex-end',
+  },
+  ModalAlertmiddle: {
+    // backgroundColor: 'green',
+    width: '100%',
+    height: '80%',
+    paddingLeft: h('3%'),
+    paddingRight: h('3%'),
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: h('2%'),
+    // marginTop: -h('5%'),
+  },
+  RequestButton: {
+    backgroundColor: Primary,
+    width: '30%',
+    height: h('6%'),
+    borderRadius: h('2%'),
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: h('6%'),
+  },
+  RequestText: {
+    color: 'white',
+    fontSize: h('2%'),
+    fontWeight: 'bold',
   },
 });

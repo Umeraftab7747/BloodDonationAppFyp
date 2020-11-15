@@ -22,16 +22,17 @@ export class MainNavigation extends Component {
             options={{headerShown: false}}
           />
           <Stack.Screen
+            name="DrawerNavigator"
+            component={DrawerNavigator}
+            options={{headerShown: false}}
+          />
+
+          <Stack.Screen
             name="Bottomtab2"
             component={Bottomtab2}
             options={{headerShown: false}}
           />
 
-          <Stack.Screen
-            name="DrawerNavigator"
-            component={DrawerNavigator}
-            options={{headerShown: false}}
-          />
           <Stack.Screen
             name="Creditiential"
             component={Creditiential}
