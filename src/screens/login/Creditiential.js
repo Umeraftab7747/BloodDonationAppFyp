@@ -70,7 +70,19 @@ export class Creditiential extends Component {
           password: '1234567899',
         })
         .then(() => {
-    
+          const values = {
+            bloodgroup: BloodType,
+            cnic: Cnic,
+            contact: Phone,
+            createdAt: new Date(),
+            dob: dob,
+            email: Email,
+            ethnicity: Ethnicity,
+            gender: Gender,
+            name: Name,
+            password: '1234567899',
+          };
+          AsyncStorage.setItem('Users', JSON.stringify(values));
           this.props.navigation.navigate('DrawerNavigator');
         });
     }

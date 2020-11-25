@@ -4,20 +4,34 @@ import {StyleSheet, View, Text, FlatList} from 'react-native';
 import {w, h} from 'react-native-responsiveness';
 
 import firestore from '@react-native-firebase/firestore';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Components
 import {NavHeader} from '../../components';
 import {Primary} from '../../color';
 
 export class Notification extends Component {
-  state = {data: []};
+  state = {data: [], username: ''};
   componentDidMount = () => {
-    this.dataFetch();
+    AsyncStorage.getItem('Users', (error, data) => {
+      const userData = JSON.parse(data);
+      if (userData !== null) {
+        this.setState({
+          username: userData.Name,
+        });
+        this.dataFetch2();
+      } else {
+        console.warn('No data found');
+      }
+    });
   };
-  dataFetch = async () => {
+
+  dataFetch2 = async () => {
     let DataArray = [];
     firestore()
       .collection('notifications')
+      // Filter results
+      .where('requestername', '==', this.state.username)
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((documentSnapshot) => {

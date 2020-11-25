@@ -43,8 +43,8 @@ export class DrawerScreen extends Component {
         <SafeAreaView />
         <View style={styles.name}>
           <View style={styles.leftr}>
-            <Text style={styles.ntxt}>Name:{this.state.data.name}</Text>
-            <Text style={styles.dtxt}>UserID:{this.state.data.cnic} </Text>
+            <Text style={styles.ntxt}>Name: {this.state.data.name}</Text>
+            <Text style={styles.dtxt}>UserID: {this.state.userid} </Text>
           </View>
         </View>
 
@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
     height: h('18%'),
     alignItems: 'center',
   },
-  dtxt: {fontSize: h('2%'), color: '#fff7', marginLeft: -h('10%')},
+  dtxt: {fontSize: h('1.5%'), color: '#fff', marginLeft: -h('5%')},
   img: {
     resizeMode: 'center',
     height: '100%',
