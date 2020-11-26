@@ -15,6 +15,8 @@ import {Icon} from 'react-native-elements';
 import {NavHeadGuest} from '../../components';
 
 import {Picker} from '@react-native-picker/picker';
+import firestore from '@react-native-firebase/firestore';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export class GRequest extends Component {
   state = {
@@ -152,14 +154,29 @@ export class GRequest extends Component {
     BloodType: 'A+',
     modalVisible: false,
     selectedData: '',
+    Hospitals2: [],
   };
-
+  componentDidMount = async () => {
+    this.Database();
+  };
+  Database = async () => {
+    let hospitalData = [];
+    firestore()
+      .collection('stocks')
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((documentSnapshot) => {
+          hospitalData.push(documentSnapshot.data());
+          this.setState({Hospitals2: hospitalData});
+        });
+      });
+  };
   renderitem = (item) => (
     <>
       {this.state.searched === 'Emergency' ? null : (
         <View style={styles.BloodData}>
           <View style={styles.left}>
-            <Text style={styles.hospitalText}>{item.name}</Text>
+            <Text style={styles.hospitalText}>{item.hospital}</Text>
           </View>
 
           <View style={styles.right}>
@@ -284,7 +301,7 @@ export class GRequest extends Component {
         {/* DATA BANK */}
 
         <FlatList
-          data={this.state.Hospitals}
+          data={this.state.Hospitals2}
           renderItem={({item}) =>
             this.state.searched === 'Advance' ? this.renderitem(item) : null
           }
@@ -319,7 +336,7 @@ export class GRequest extends Component {
                   </TouchableOpacity>
                 </View>
 
-                <View style={styles.ModalAlertmiddle}>
+                <View style={[styles.ModalAlertmiddle, {height: '80%'}]}>
                   <Text style={styles.KindlySignup}>
                     KINDLY SIGNUP TO USE THIS FEATURE!
                   </Text>
@@ -358,15 +375,80 @@ export class GRequest extends Component {
                   </TouchableOpacity>
                 </View>
 
-                <View style={styles.ModalAlertmiddle}>
+                <View style={[styles.ModalAlertmiddle]}>
                   <Text style={styles.DataTime1}>
-                    Name: {this.state.selectedData.name}
+                    Name: {this.state.selectedData.hospital}
                   </Text>
                   <Text style={styles.DataTime2}>
-                    Address: {this.state.selectedData.address}
+                    Address: {this.state.selectedData.Address}
                   </Text>
                   <Text style={styles.DataTime3}>
-                    Number: {this.state.selectedData.number}
+                    Number: {this.state.selectedData.phone}
+                  </Text>
+                </View>
+                <View style={styles.ModalAlertmiddle2}>
+                  <Text style={styles.DataTime4}>
+                    RBC AB+: {this.state.selectedData.RBCABp}
+                  </Text>
+                  <Text style={styles.DataTime4}>
+                    RBC AB-: {this.state.selectedData.RBCABn}
+                  </Text>
+                  <Text style={styles.DataTime4}>
+                    RBC A+: {this.state.selectedData.RBCAp}
+                  </Text>
+                  <Text style={styles.DataTime4}>
+                    RBC B+: {this.state.selectedData.RBCBp}
+                  </Text>
+                  <Text style={styles.DataTime4}>
+                    RBC A-: {this.state.selectedData.RBCAn}
+                  </Text>
+                  <Text style={styles.DataTime4}>
+                    RBC B-: {this.state.selectedData.RBCBN}
+                  </Text>
+                  <Text style={styles.DataTime4}>
+                    RBC O-: {this.state.selectedData.RBCOn}
+                  </Text>
+                  <Text style={styles.DataTime4}>
+                    RBC O+: {this.state.selectedData.RBCOp}
+                  </Text>
+                  <Text style={styles.DataTime4}>
+                    WBC AB+: {this.state.selectedData.WBCABp}
+                  </Text>
+                  <Text style={styles.DataTime4}>
+                    WBC AB-: {this.state.selectedData.WBCABn}
+                  </Text>
+                  <Text style={styles.DataTime4}>
+                    WBC A+: {this.state.selectedData.WBCAp}
+                  </Text>
+                  <Text style={styles.DataTime4}>
+                    WBC A-: {this.state.selectedData.WBCAn}
+                  </Text>
+                  <Text style={styles.DataTime4}>
+                    WBC B+: {this.state.selectedData.WBCBp}
+                  </Text>
+                  <Text style={styles.DataTime4}>
+                    WBC B-: {this.state.selectedData.WBCBn}
+                  </Text>
+                  <Text style={styles.DataTime4}>
+                    WBC O-: {this.state.selectedData.WBCOn}
+                  </Text>
+                  <Text style={styles.DataTime4}>
+                    WBC O+: {this.state.selectedData.WBCOp}
+                  </Text>
+                  <Text style={styles.DataTime4}>
+                    Platelet: {this.state.selectedData.Platelet}
+                  </Text>
+                  <Text style={styles.DataTime4}>
+                    Plasma: {this.state.selectedData.Plasma}
+                  </Text>
+                  <Text style={styles.DataTime4}>
+                    Cryo: {this.state.selectedData.Cryo}
+                  </Text>
+                  <Text style={styles.DataTime4}>
+                    WBC Other: {this.state.selectedData.WBCOther}
+                  </Text>
+                  <Text style={styles.DataTime4}>
+                    RBC Other: {this.state.selectedData.RBCOther}
                   </Text>
                 </View>
               </View>
@@ -539,22 +621,33 @@ const styles = StyleSheet.create({
   ModalAlert: {
     backgroundColor: 'white',
     width: w('96%'),
-    height: h('40%'),
+    height: h('85%'),
     borderRadius: h('2%'),
   },
   ModalAlerttop: {
     // backgroundColor: 'gold',
     width: '100%',
-    height: '15%',
+    height: '10%',
     // justifyContent: 'flex-end',
     alignItems: 'flex-end',
   },
   ModalAlertmiddle: {
     // backgroundColor: 'green',
     width: '100%',
-    height: '80%',
+    height: '15%',
     paddingLeft: h('1.2%'),
     paddingRight: h('1.2%'),
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: h('2%'),
+    // marginTop: -h('5%'),
+  },
+  ModalAlertmiddle2: {
+    // backgroundColor: 'gold',
+    width: '100%',
+    height: '75%',
+    paddingLeft: h('3%'),
+    paddingRight: h('3%'),
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: h('2%'),
@@ -602,6 +695,11 @@ const styles = StyleSheet.create({
   DataTime3: {
     color: Primary,
     fontSize: h('2.5%'),
+    fontWeight: 'bold',
+  },
+  DataTime4: {
+    color: Primary,
+    fontSize: h('2.2%'),
     fontWeight: 'bold',
   },
 });

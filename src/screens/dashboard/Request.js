@@ -556,7 +556,7 @@ export class Request extends Component {
                     WBC Other: {this.state.selectedData.WBCOther}
                   </Text>
                   <Text style={styles.DataTime4}>
-                    RBC Other: {this.state.selectedData.RBCOther}
+                    RBC Other: {this.state.selectedData.Cryo}
                   </Text>
                 </View>
               </View>
