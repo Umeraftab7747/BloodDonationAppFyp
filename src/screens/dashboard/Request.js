@@ -401,7 +401,7 @@ export class Request extends Component {
               this.setState({modalVisible: false});
             }}>
             <View style={styles.ModalContainer}>
-              <View style={styles.ModalAlert}>
+              <View style={[styles.ModalAlert, {height: h('40%')}]}>
                 <View style={styles.ModalAlerttop}>
                   <TouchableOpacity
                     delayPressIn={0}
@@ -417,7 +417,7 @@ export class Request extends Component {
                   </TouchableOpacity>
                 </View>
 
-                <View style={styles.ModalAlertmiddle}>
+                <View style={[styles.ModalAlertmiddle, {height: '80%'}]}>
                   <Text style={styles.DataTime1}>
                     Name: {this.state.selectedData.hospital}
                   </Text>
@@ -664,7 +664,7 @@ const styles = StyleSheet.create({
   ModalAlert: {
     backgroundColor: 'white',
     width: w('96%'),
-    height: h('40%'),
+    height: h('85%'),
     borderRadius: h('2%'),
   },
   ModalAlerttop: {
@@ -675,9 +675,9 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   ModalAlertmiddle: {
-    // backgroundColor: 'green',
+    backgroundColor: 'green',
     width: '100%',
-    height: '80%',
+    height: '20%',
     paddingLeft: h('3%'),
     paddingRight: h('3%'),
     justifyContent: 'center',
