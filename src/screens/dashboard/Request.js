@@ -494,6 +494,71 @@ export class Request extends Component {
                     Number: {this.state.selectedData.phone}
                   </Text>
                 </View>
+                <View style={styles.ModalAlertmiddle2}>
+                  <Text style={styles.DataTime4}>
+                    RBC AB+: {this.state.selectedData.RBCABp}
+                  </Text>
+                  <Text style={styles.DataTime4}>
+                    RBC AB-: {this.state.selectedData.RBCABn}
+                  </Text>
+                  <Text style={styles.DataTime4}>
+                    RBC A+: {this.state.selectedData.RBCAp}
+                  </Text>
+                  <Text style={styles.DataTime4}>
+                    RBC B+: {this.state.selectedData.RBCBp}
+                  </Text>
+                  <Text style={styles.DataTime4}>
+                    RBC A-: {this.state.selectedData.RBCAn}
+                  </Text>
+                  <Text style={styles.DataTime4}>
+                    RBC B-: {this.state.selectedData.RBCBN}
+                  </Text>
+                  <Text style={styles.DataTime4}>
+                    RBC O-: {this.state.selectedData.RBCOn}
+                  </Text>
+                  <Text style={styles.DataTime4}>
+                    RBC O+: {this.state.selectedData.RBCOp}
+                  </Text>
+                  <Text style={styles.DataTime4}>
+                    WBC AB+: {this.state.selectedData.WBCABp}
+                  </Text>
+                  <Text style={styles.DataTime4}>
+                    WBC AB-: {this.state.selectedData.WBCABn}
+                  </Text>
+                  <Text style={styles.DataTime4}>
+                    WBC A+: {this.state.selectedData.WBCAp}
+                  </Text>
+                  <Text style={styles.DataTime4}>
+                    WBC A-: {this.state.selectedData.WBCAn}
+                  </Text>
+                  <Text style={styles.DataTime4}>
+                    WBC B+: {this.state.selectedData.WBCBp}
+                  </Text>
+                  <Text style={styles.DataTime4}>
+                    WBC B-: {this.state.selectedData.WBCBn}
+                  </Text>
+                  <Text style={styles.DataTime4}>
+                    WBC O-: {this.state.selectedData.WBCOn}
+                  </Text>
+                  <Text style={styles.DataTime4}>
+                    WBC O+: {this.state.selectedData.WBCOp}
+                  </Text>
+                  <Text style={styles.DataTime4}>
+                    Platelet: {this.state.selectedData.Platelet}
+                  </Text>
+                  <Text style={styles.DataTime4}>
+                    Plasma: {this.state.selectedData.Plasma}
+                  </Text>
+                  <Text style={styles.DataTime4}>
+                    Cryo: {this.state.selectedData.Cryo}
+                  </Text>
+                  <Text style={styles.DataTime4}>
+                    WBC Other: {this.state.selectedData.WBCOther}
+                  </Text>
+                  <Text style={styles.DataTime4}>
+                    RBC Other: {this.state.selectedData.RBCOther}
+                  </Text>
+                </View>
               </View>
             </View>
           </Modal>
@@ -670,14 +735,25 @@ const styles = StyleSheet.create({
   ModalAlerttop: {
     // backgroundColor: 'gold',
     width: '100%',
-    height: '15%',
+    height: '10%',
     // justifyContent: 'flex-end',
     alignItems: 'flex-end',
   },
   ModalAlertmiddle: {
-    backgroundColor: 'green',
+    // backgroundColor: 'green',
     width: '100%',
-    height: '20%',
+    height: '15%',
+    paddingLeft: h('3%'),
+    paddingRight: h('3%'),
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: h('2%'),
+    // marginTop: -h('5%'),
+  },
+  ModalAlertmiddle2: {
+    // backgroundColor: 'gold',
+    width: '100%',
+    height: '75%',
     paddingLeft: h('3%'),
     paddingRight: h('3%'),
     justifyContent: 'center',
@@ -716,6 +792,11 @@ const styles = StyleSheet.create({
   DataTime3: {
     color: Primary,
     fontSize: h('2.5%'),
+    fontWeight: 'bold',
+  },
+  DataTime4: {
+    color: Primary,
+    fontSize: h('2.2%'),
     fontWeight: 'bold',
   },
 });
