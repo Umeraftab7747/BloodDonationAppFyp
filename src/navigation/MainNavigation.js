@@ -4,7 +4,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 const Stack = createStackNavigator();
 import {Welcome} from '../screens/login';
 import {Creditiential} from '../screens/login';
-import {Home} from '../screens/dashboard';
+
 import {EditProfile} from '../screens/dashboard';
 
 import {Bottomtab} from './Bottomtab';
@@ -44,11 +44,7 @@ export class MainNavigation extends Component {
             component={Bottomtab}
             options={{headerShown: false}}
           />
-          <Stack.Screen
-            name="Home"
-            component={Home}
-            options={{headerShown: false}}
-          />
+     
         </Stack.Navigator>
       </NavigationContainer>
     );

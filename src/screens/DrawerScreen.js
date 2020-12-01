@@ -58,7 +58,7 @@ export class DrawerScreen extends Component {
 
         <TouchableOpacity
           onPress={() => {
-            this.props.navigation.navigate('Bottomtab');
+            this.props.navigation.navigate('Home');
           }}
           style={[styles.ItemView, {marginTop: h('1%')}]}>
           <View style={styles.iconContainer}>
@@ -133,13 +133,20 @@ export class DrawerScreen extends Component {
             styles.ItemView,
             {
               marginTop: h('38.3%'),
-              //   borderWidth: h('0.05'),
+                borderWidth: h('0.1'),
             },
           ]}>
-          <Text
-            style={[styles.txt, {marginRight: h('5%'), fontWeight: 'bold'}]}>
-            Logout
-          </Text>
+              <View style={styles.iconContainer}>
+            <Icon
+              name={'log-out-outline'}
+              type={'ionicon'}
+              color={Primary}
+              size={h('4%')}
+            />
+          </View>
+          <View style={styles.txtContainer}>
+            <Text style={[styles.txt,{fontWeight:"bold"}]}>LOGOUT</Text>
+          </View>
         </TouchableOpacity>
       </View>
     );
