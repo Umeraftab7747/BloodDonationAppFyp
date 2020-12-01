@@ -1,7 +1,7 @@
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
-import {View, Text, SafeAreaView, StyleSheet} from 'react-native';
+import {View, Text, SafeAreaView, StyleSheet,StatusBar } from 'react-native';
 import {w, h} from 'react-native-responsiveness';
 import {Primary} from '../color';
 import {TouchableOpacity} from 'react-native-gesture-handler';
@@ -47,6 +47,7 @@ export class DrawerScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
+       <StatusBar backgroundColor={Primary}/>
         <SafeAreaView />
         <View style={styles.name}>
           <View style={styles.leftr}>
@@ -175,7 +176,7 @@ const styles = StyleSheet.create({
     fontSize: h('3%'),
     color: '#fff',
     marginTop: h('6%'),
-    marginRight: h('12%'),
+    // marginRight: h('12%'),
     fontWeight: 'bold',
   },
   leftc: {
@@ -188,9 +189,12 @@ const styles = StyleSheet.create({
   leftr: {
     width: h('41%'),
     height: h('18%'),
-    alignItems: 'center',
+ 
+ 
+    paddingLeft:h("2%")
+    
   },
-  dtxt: {fontSize: h('1.5%'), color: '#fff', marginLeft: -h('5%')},
+  dtxt: {fontSize: h('1.5%'), color: '#fff',},
   img: {
     resizeMode: 'center',
     height: '100%',
