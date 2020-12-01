@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, View, Text} from 'react-native';
+import {StyleSheet, View, Text,StatusBar} from 'react-native';
 import {Primary} from '../../color';
 import {w, h} from 'react-native-responsiveness';
 
@@ -91,6 +91,7 @@ export class Creditiential extends Component {
   render() {
     return (
       <KeyboardAwareScrollView>
+      <StatusBar backgroundColor={Primary}/>
         <View style={styles.Container}>
           <Text style={styles.CompleteApp}>
             COMPLETE THE DETAILS TO START USING APP

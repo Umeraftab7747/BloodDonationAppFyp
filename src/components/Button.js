@@ -28,7 +28,7 @@ export class Button extends Component {
 const styles = StyleSheet.create({
   signIn: {
     width: w('60%'),
-    height: h('6%'),
+    height: h('5%'),
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: h('10%'),

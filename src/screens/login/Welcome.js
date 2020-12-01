@@ -6,7 +6,7 @@ import {
   Text,
   Animated,
   TouchableOpacity,
-  Modal,
+  Modal,StatusBar 
 } from 'react-native';
 import {Primary} from '../../color';
 import {w, h} from 'react-native-responsiveness';
@@ -165,12 +165,12 @@ export class Welcome extends Component {
 
   startAnimation = () => {
     Animated.timing(this.state.logoAnimation, {
-      toValue: -220,
+      toValue: -230,
       duration: 1000,
       useNativeDriver: false,
     }).start();
     Animated.timing(this.state.lowerContainerAnimation, {
-      toValue: -440,
+      toValue: -470,
       duration: 900,
       useNativeDriver: false,
     }).start();
@@ -184,7 +184,7 @@ export class Welcome extends Component {
     }).start();
 
     Animated.timing(this.state.lowerContainerAnimation, {
-      toValue: 440,
+      toValue: 470,
       duration: 500,
       useNativeDriver: false,
     }).start();
@@ -244,6 +244,7 @@ export class Welcome extends Component {
 
     return (
       <KeyboardAwareScrollView>
+      <StatusBar backgroundColor={Primary}/>
         <View style={styles.Container}>
           <Animated.View style={[styles.TopContainer, AnimatedStyle]}>
             <Image
@@ -411,7 +412,7 @@ export class Welcome extends Component {
 const styles = StyleSheet.create({
   Container: {
     width: w('100%'),
-    height: h('100%'),
+    height: h('110%'),
     backgroundColor: Primary,
   },
   TopContainer: {
@@ -472,9 +473,9 @@ const styles = StyleSheet.create({
   },
   leftSignup: {
     // backgroundColor: 'green',
-    width: '40%',
+    width: '50%',
     height: '100%',
-    // alignItems: 'center',
+    alignItems: 'center',
     justifyContent: 'center',
   },
   rightSignup: {
