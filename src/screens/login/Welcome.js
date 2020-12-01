@@ -412,7 +412,7 @@ export class Welcome extends Component {
 const styles = StyleSheet.create({
   Container: {
     width: w('100%'),
-    height: h('110%'),
+    height: h('100%'),
     backgroundColor: Primary,
   },
   TopContainer: {
