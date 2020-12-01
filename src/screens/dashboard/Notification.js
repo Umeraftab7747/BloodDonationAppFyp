@@ -13,20 +13,25 @@ import {Primary} from '../../color';
 export class Notification extends Component {
   state = {data: [], username: ''};
   componentDidMount = () => {
-    AsyncStorage.getItem('Users', (error, data) => {
+  
+    AsyncStorage.getItem('UsersName', (error, data) => {
       const userData = JSON.parse(data);
       if (userData !== null) {
         this.setState({
-          username: userData.Name,
+          username: userData,
         });
         this.dataFetch2();
+        console.warn(userData);
+     
+      
       } else {
-        console.warn('No data found');
+        console.warn("ERROR");
       }
     });
   };
 
   dataFetch2 = async () => {
+ 
     let DataArray = [];
     firestore()
       .collection('notifications')
@@ -40,6 +45,7 @@ export class Notification extends Component {
           this.setState({data: DataArray});
         });
       });
+      console.warn( this.state.username);
   };
 
   renderItem = (item) => (

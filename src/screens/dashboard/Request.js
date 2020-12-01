@@ -161,6 +161,7 @@ export class Request extends Component {
     data: [],
     selectedData: '',
     Hospitals2: [],
+    userName:""
   };
   // start
 

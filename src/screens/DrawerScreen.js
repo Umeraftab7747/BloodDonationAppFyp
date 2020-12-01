@@ -10,14 +10,16 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import firestore from '@react-native-firebase/firestore';
 
 export class DrawerScreen extends Component {
-  state = {userid: '', data: []};
+  state = {userid: '', data: [],username:""};
   componentDidMount = async () => {
     AsyncStorage.getItem('userData', (error, data) => {
       const userData = JSON.parse(data);
       if (userData !== null) {
         this.setState({
           userid: userData.id,
+      
         });
+      
         this.userinfo();
       } else {
         console.warn('No data found');
@@ -31,11 +33,16 @@ export class DrawerScreen extends Component {
     });
   };
   userinfo = async () => {
+
     const user = await firestore()
       .collection('clientsdata')
       .doc(this.state.userid)
       .get();
     this.setState({data: user.data()});
+    this.setState({userName:this.state.data.name})
+    AsyncStorage.setItem('UsersName', JSON.stringify(this.state.userName));
+  
+  
   };
   render() {
     return (
