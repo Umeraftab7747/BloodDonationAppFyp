@@ -156,7 +156,7 @@ export class GRequest extends Component {
     selectedData: '',
     Hospitals2: [],
   };
-  componentDidMount = async () => {
+  componentDidMount = () => {
     this.Database();
   };
   Database = async () => {

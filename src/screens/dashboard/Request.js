@@ -161,8 +161,6 @@ export class Request extends Component {
     data: [],
     selectedData: '',
     Hospitals2: [],
-    Hospitals3: [],
-    filteredData: [],
   };
   // start
 
