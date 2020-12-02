@@ -153,7 +153,7 @@ export class Request extends Component {
     checked: false,
     checked1: false,
     searched: "",
-    BloodType: "A+",
+    BloodType: "RBCABp",
     modalVisible: false,
     date: "",
     units: "",
@@ -162,6 +162,7 @@ export class Request extends Component {
     selectedData: "",
     Hospitals2: [],
     userName: "",
+    PhoneNo: "",
   };
   // start
 
@@ -219,6 +220,7 @@ export class Request extends Component {
           timee: new Date(),
           units: units,
           Reqhospital: this.state.selectedData.hospitalf,
+          PhoneNo: this.state.data.contact,
         })
         .then(() => {
           console.log("User added!");
@@ -380,6 +382,7 @@ export class Request extends Component {
                   // this.searching(units);
                   this.setState({ units });
                 }}
+                keyboardType={"numeric"}
               />
             </View>
           </View>
