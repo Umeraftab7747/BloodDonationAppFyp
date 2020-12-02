@@ -47,12 +47,10 @@ export class Profile extends Component {
               source={require("../../assets/1.png")}
             />
           </View>
-          <View style={styles.TopViewNameID}>
-            <Text style={styles.TopText}>Name: {this.state.data.name}</Text>
-            <Text style={styles.TopText}>User ID: {this.state.data.cnic}</Text>
-          </View>
         </View>
         <View style={styles.MiddleView}>
+          <Text style={styles.MiddleText}>Name: {this.state.data.name}</Text>
+          <Text style={styles.MiddleText}>User ID: {this.state.data.cnic}</Text>
           <Text style={styles.MiddleText}>Email: {this.state.data.email}</Text>
           <Text style={styles.MiddleText}>Cnic:{this.state.data.cnic}</Text>
           <Text style={styles.MiddleText}>
@@ -77,35 +75,37 @@ const styles = StyleSheet.create({
     // backgroundColor: Primary,
   },
   TopView: {
-    // backgroundColor: 'red',
+    // backgroundColor: "red",
     width: w("100%"),
-    height: h("33%"),
+    height: h("20%"),
     alignItems: "center",
   },
   MiddleView: {
-    // backgroundColor: 'gold',
+    // backgroundColor: "gold",
     width: w("100%"),
-    height: h("59%"),
-    alignItems: "center",
+    height: h("69%"),
+    // alignItems: "center",
+    paddingLeft: h("2%"),
   },
 
   Cicle: {
-    // backgroundColor: 'tomato',
-    width: 150,
-    height: 150,
+    // backgroundColor: "tomato",
+    width: 130,
+    height: 130,
     borderRadius: 1500 / 2,
-    marginTop: h("1%"),
+
     justifyContent: "center",
     alignItems: "center",
     overflow: "hidden",
   },
   TopViewNameID: {
-    // backgroundColor: 'green',
+    backgroundColor: "green",
     width: w("100%"),
-    height: "30%",
-    alignItems: "center",
+    height: "2%",
+    // alignItems: "center",
     justifyContent: "space-around",
     // flexDirection: 'row',
+    paddingLeft: h("3%"),
   },
   TopText: {
     color: "black",
