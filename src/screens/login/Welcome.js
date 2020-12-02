@@ -272,6 +272,7 @@ export class Welcome extends Component {
                     onChangeText={(Password) => {
                       this.setState({ Password });
                     }}
+                    secureTextEntry
                   />
                   <TouchableOpacity
                     onPress={() => {
@@ -328,6 +329,7 @@ export class Welcome extends Component {
                   onChangeText={(SignupPassword) => {
                     this.setState({ SignupPassword });
                   }}
+                  secureTextEntry
                 />
                 <Textinput
                   name={"lock-closed"}
@@ -335,6 +337,7 @@ export class Welcome extends Component {
                   onChangeText={(SignupConfirmPassword) => {
                     this.setState({ SignupConfirmPassword });
                   }}
+                  secureTextEntry
                 />
                 <Button
                   Text={"Signup"}
