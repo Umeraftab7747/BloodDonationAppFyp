@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from "react";
 import {
   StyleSheet,
   View,
@@ -7,21 +7,20 @@ import {
   FlatList,
   TouchableOpacity,
   Modal,
-} from 'react-native';
-import {Primary} from '../../color';
-import {w, h} from 'react-native-responsiveness';
-import {Icon} from 'react-native-elements';
+} from "react-native";
+import { Primary } from "../../color";
+import { w, h } from "react-native-responsiveness";
+import { Icon } from "react-native-elements";
 
 // Components
-import {NavHeader} from '../../components';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import firestore from '@react-native-firebase/firestore';
+import { NavHeader } from "../../components";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import firestore from "@react-native-firebase/firestore";
 
-let DataAraay = [];
 export class Records extends Component {
-  state = {userid: '', data: []};
+  state = { userid: "", data: [] };
   componentDidMount = async () => {
-    AsyncStorage.getItem('userData', (error, data) => {
+    AsyncStorage.getItem("userData", (error, data) => {
       const userData = JSON.parse(data);
       if (userData !== null) {
         this.setState({
@@ -29,21 +28,21 @@ export class Records extends Component {
         });
         this.userinfo();
       } else {
-        console.warn('No data found');
+        console.warn("No data found");
       }
     });
   };
 
   userinfo = async () => {
+    let DataAraay = [];
     firestore()
-      .collection('clientshistory')
-      .where('donorid', '==', this.state.userid)
+      .collection("clientshistory")
+      .where("donorid", "==", this.state.userid)
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((documentSnapshot) => {
           DataAraay.push(documentSnapshot.data());
-          this.setState({data: DataAraay});
-          console.log(this.state.data);
+          this.setState({ data: DataAraay });
         });
       });
   };
@@ -55,7 +54,10 @@ export class Records extends Component {
       </View>
       <View style={styles.RightFlat}>
         <Text style={styles.textColor}>
-          Time: {item.createdAt.toDate().toDateString()}
+          Date: {item.createdAt.toDate().toDateString()}
+        </Text>
+        <Text style={styles.textColor}>
+          Time: {item.createdAt.toDate().toTimeString()}
         </Text>
       </View>
     </View>
@@ -65,7 +67,7 @@ export class Records extends Component {
     return (
       <View style={styles.Container}>
         <NavHeader
-          txt="Records"
+          txt="HISTORY"
           onPress={() => {
             this.props.navigation.openDrawer();
           }}
@@ -74,7 +76,7 @@ export class Records extends Component {
         <View style={styles.FlatListContianer}>
           <FlatList
             data={this.state.data}
-            renderItem={({item}) => this.renderItem(item)}
+            renderItem={({ item }) => this.renderItem(item)}
             keyExtractor={(item) => item.requesterID}
           />
         </View>
@@ -87,38 +89,40 @@ const styles = StyleSheet.create({
   Container: {
     flex: 1,
     // backgroundColor: Primary,
-    alignItems: 'center',
+    alignItems: "center",
   },
   FlatListContianer: {
     // backgroundColor: 'red',
-    width: '95%',
-    height: h('90%'),
-    alignItems: 'center',
+    width: "95%",
+    height: h("90%"),
+    alignItems: "center",
   },
   FlatListView: {
     backgroundColor: Primary,
-    width: w('90%'),
-    height: h('10%'),
-    margin: h('1%'),
-    flexDirection: 'row',
-    borderRadius: h('1%'),
+    width: w("90%"),
+    height: h("10%"),
+    margin: h("1%"),
+    flexDirection: "row",
+    borderRadius: h("1%"),
   },
   leftFlat: {
     // backgroundColor: 'red',
-    width: '45%',
-    height: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
+    width: "45%",
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
   },
   RightFlat: {
-    // backgroundColor: 'green',
-    width: '55%',
-    height: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
+    // backgroundColor: "green",
+    width: "55%",
+    height: "100%",
+    justifyContent: "center",
+    // alignItems: "center",
+    paddingLeft: h("1%"),
   },
   textColor: {
-    color: 'white',
-    marginLeft: h('1%'),
+    color: "white",
+    marginLeft: h("1%"),
+    fontSize: h("1.9%"),
   },
 });

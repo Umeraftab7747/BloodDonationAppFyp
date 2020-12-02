@@ -86,17 +86,18 @@ const styles = StyleSheet.create({
   },
   Containerfortext: {
     backgroundColor: 'white',
-    width: w('90%'),
+    width: w('96%'),
     height: h('70%'),
     marginTop: h('2%'),
     borderRadius: h('2%'),
     elevation: 4,
     paddingLeft: h('2.5%'),
     paddingRight: h('2.5%'),
+    overflow:"hidden"
   },
   Containerfortext2: {
     backgroundColor: 'white',
-    width: w('90%'),
+    width: w('96%'),
     height: h('30%'),
     marginTop: h('2%'),
     borderRadius: h('2%'),
