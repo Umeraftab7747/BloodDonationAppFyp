@@ -51,6 +51,9 @@ export class Profile extends Component {
         <View style={styles.MiddleView}>
           <Text style={styles.MiddleText}>Name: {this.state.data.name}</Text>
           <Text style={styles.MiddleText}>User ID: {this.state.data.cnic}</Text>
+          <Text style={styles.MiddleText}>
+            Phone No: {this.state.data.contact}
+          </Text>
           <Text style={styles.MiddleText}>Email: {this.state.data.email}</Text>
           <Text style={styles.MiddleText}>Cnic:{this.state.data.cnic}</Text>
           <Text style={styles.MiddleText}>
@@ -113,9 +116,9 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   MiddleText: {
-    fontSize: h("2.5%"),
+    fontSize: h("2.3%"),
     fontWeight: "bold",
-    margin: h("2%"),
+    margin: h("1%"),
   },
   imgeContainer: {
     resizeMode: "contain",
