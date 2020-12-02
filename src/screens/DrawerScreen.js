@@ -21,7 +21,7 @@ export class DrawerScreen extends Component {
 
         this.userinfo();
       } else {
-        console.warn("No data found");
+      
       }
     });
   };

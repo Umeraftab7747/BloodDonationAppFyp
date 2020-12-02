@@ -19,7 +19,7 @@ export class Profile extends Component {
         });
         this.userinfo();
       } else {
-        console.warn("No data found");
+        console.log("No data found");
       }
     });
   };

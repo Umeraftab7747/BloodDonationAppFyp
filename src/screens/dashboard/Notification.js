@@ -21,11 +21,11 @@ export class Notification extends Component {
           username: userData,
         });
         this.dataFetch2();
-        console.warn(userData);
+   
      
       
       } else {
-        console.warn("ERROR");
+        console.log("ERROR");
       }
     });
   };
@@ -45,7 +45,7 @@ export class Notification extends Component {
           this.setState({data: DataArray});
         });
       });
-      console.warn( this.state.username);
+      console.log( this.state.username);
   };
 
   renderItem = (item) => (

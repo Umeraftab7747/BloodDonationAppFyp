@@ -36,7 +36,7 @@ export class Creditiential extends Component {
           Email: userData.email,
         });
       } else {
-        console.warn("No data found");
+        console.log("No data found");
       }
     });
   };
