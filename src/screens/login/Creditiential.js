@@ -173,7 +173,7 @@ export class Creditiential extends Component {
             <Text>Select Ethnicity</Text>
             <Picker
               selectedValue={this.state.Ethnicity}
-              style={{ height: 50, width: 100 }}
+              style={{ height: 50, width: 250 }}
               onValueChange={(itemValue, itemIndex) =>
                 this.setState({ Ethnicity: itemValue })
               }
@@ -197,7 +197,7 @@ export class Creditiential extends Component {
               style={{ width: 200 }}
               date={this.state.dob}
               mode="date"
-              placeholder="select date"
+              placeholder="DATE OF BIRTH"
               format="YYYY-MM-DD"
               confirmBtnText="Confirm"
               cancelBtnText="Cancel"

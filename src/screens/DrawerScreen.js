@@ -21,7 +21,6 @@ export class DrawerScreen extends Component {
 
         this.userinfo();
       } else {
-      
       }
     });
   };
@@ -181,7 +180,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   ntxt: {
-    fontSize: h("3%"),
+    fontSize: h("2%"),
     color: "#fff",
     marginTop: h("6%"),
     // marginRight: h('12%'),
