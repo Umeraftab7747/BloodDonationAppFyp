@@ -173,7 +173,7 @@ export class Creditiential extends Component {
             <Text>Select Ethnicity</Text>
             <Picker
               selectedValue={this.state.Ethnicity}
-              style={{ height: 50, width: 250 }}
+              style={{ height: 50, width: 150 }}
               onValueChange={(itemValue, itemIndex) =>
                 this.setState({ Ethnicity: itemValue })
               }

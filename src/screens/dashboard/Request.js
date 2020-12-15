@@ -224,6 +224,7 @@ export class Request extends Component {
         })
         .then(() => {
           console.log("User added!");
+          alert("Request have been Send");
         });
     }
   };
@@ -807,7 +808,7 @@ const styles = StyleSheet.create({
   },
   DataTime4: {
     color: Primary,
-    fontSize: h("2.2%"),
+    fontSize: h("1.9%"),
     fontWeight: "bold",
   },
 });

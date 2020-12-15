@@ -50,7 +50,7 @@ export class Profile extends Component {
         </View>
         <View style={styles.MiddleView}>
           <Text style={styles.MiddleText}>Name: {this.state.data.name}</Text>
-          <Text style={styles.MiddleText}>User ID: {this.state.data.cnic}</Text>
+          <Text style={styles.MiddleText}>User ID: {this.state.userid}</Text>
           <Text style={styles.MiddleText}>
             Phone No: {this.state.data.contact}
           </Text>
